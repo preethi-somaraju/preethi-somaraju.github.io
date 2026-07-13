@@ -11,7 +11,7 @@ import boto3
 import requests
 
 PROFILE_NAME = "preethi-portfolio"
-BUCKET_NAME = "CHANGE-ME-to-your-bucket-name"  # must be globally unique
+BUCKET_NAME = "preethi-portfolio-nyc-taxi-099771438185"
 REGION = "us-east-2"
 
 LATEST_MONTH = "2026-05"  # update this as newer months become available
