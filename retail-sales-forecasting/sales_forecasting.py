@@ -4,6 +4,14 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 
+# Attempt import of matplotlib, install if missing
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    import subprocess
+    subprocess.run(["pip", "install", "matplotlib"], check=True)
+    import matplotlib.pyplot as plt
+
 def generate_mock_sales_data(days=365):
     """Generates synthetic daily sales transaction data with weekly seasonality and upward trend."""
     np.random.seed(42)
@@ -82,7 +90,23 @@ def train_forecaster():
     results_df = test_df[['date', 'sales']].copy()
     results_df['forecasted_sales'] = predictions
     results_df.to_csv("sales_forecast_results.csv", index=False)
-    print("Forecast completed. Saved outputs to sales_forecast_results.csv")
+    
+    # Generate Visual Plot Chart
+    plt.figure(figsize=(10, 5))
+    plt.plot(test_df['date'], test_df['sales'], label='Actual Sales Demand', color='#1e293b', linewidth=2)
+    plt.plot(test_df['date'], predictions, label='Forecasted Demand (Linear Regression)', color='#3b82f6', linestyle='--', linewidth=2)
+    plt.title('Retail Sales Forecast vs Actual Demand Model', fontsize=14, fontweight='bold', pad=15)
+    plt.xlabel('Date Range', fontsize=12)
+    plt.ylabel('Daily Units Sold', fontsize=12)
+    plt.legend(loc='upper left')
+    plt.grid(True, linestyle=':', alpha=0.6)
+    plt.tight_layout()
+    
+    # Save plot file
+    plot_filename = "sales_forecast_plot.png"
+    plt.savefig(plot_filename, dpi=300)
+    plt.close()
+    print(f"Saved forecasting visualization plot to {plot_filename}")
 
 if __name__ == "__main__":
     train_forecaster()
