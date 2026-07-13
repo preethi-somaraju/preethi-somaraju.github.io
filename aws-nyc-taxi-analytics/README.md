@@ -35,11 +35,30 @@ So the real pipeline is:
 6. In Athena, point at the database the crawler created, and run queries against the table (see `analysis.ipynb` for starter queries).
 7. Use `analysis.ipynb` to pull Athena query results into pandas and build visualizations.
 
-## Deliverables (in progress)
-- [ ] AWS Glue Data Catalog table for the trip data
-- [ ] Athena SQL queries exploring trip duration / peak hour trends
-- [ ] Jupyter notebook with boto3 + pandas analysis and charts
-- [ ] This README updated with actual findings once analysis is done
+## Deliverables
+- [x] AWS Glue Data Catalog table for the trip data (`nyc_taxi_portfolio_db.trip_data`, 19 columns, schema inferred automatically by the crawler)
+- [x] Athena SQL queries exploring trip duration / peak hour trends
+- [x] Jupyter notebook with boto3 + pandas analysis and charts (`analysis.ipynb`)
+- [x] Findings below
+
+## Findings (May 2026 data, 4,038,773 trips)
+
+| Metric | Value |
+|---|---|
+| Total trips | 4,038,773 |
+| Average trip distance | 4.98 miles |
+| Average fare | $21.56 |
+| Average trip duration | 19.0 minutes |
+
+**Peak hour:** 6 PM (279,829 trips), followed closely by 5 PM (272,245 trips) — the two busiest hours of the day, consistent with the evening commute.
+
+**Quietest hour:** 2 AM (55,893 trips) — roughly 5x fewer trips than peak.
+
+**Longest average trips:** 3 PM (~22.8 minutes average) and 2 PM (~22.2 minutes) — likely mid-afternoon traffic congestion rather than distance, since average trip distance during these hours is actually *shorter* than early-morning hours.
+
+**Shortest average trips:** 2 AM (~14.0 minutes) — consistent with light overnight traffic.
+
+![Hourly trip trends](nyc_taxi_hourly_trends.png)
 
 ## Tech stack
 AWS S3, AWS Glue, Amazon Athena, boto3, pandas, IAM Identity Center (SSO)
