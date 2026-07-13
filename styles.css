@@ -685,3 +685,12 @@ a {
         text-align: center;
     }
 }
+
+
+/* Link wrapper for project cards */
+.project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    width: 100%;
+}
