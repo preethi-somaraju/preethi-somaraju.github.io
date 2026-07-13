@@ -2,3 +2,13 @@
 
 # Ignore AI Agent documentation
 project-documents/AI_Agent_System_Summary.*
+
+# Standard developer noise
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+.DS_Store
+*.log
+temp/
+*.tmp
