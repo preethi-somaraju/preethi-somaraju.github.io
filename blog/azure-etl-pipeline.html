@@ -48,13 +48,18 @@
                 <li><a href="../blog.html" class="active">Blog</a></li>
                 <li><a href="../index.html#contact">Contact</a></li>
             </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </div>
     </nav>
 
     <!-- Main Content -->
     <main class="post-container">
         <a href="../blog.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Blog</a>
-        
+
         <article>
             <header class="post-header">
                 <span class="post-category">Data Engineering</span>
@@ -65,7 +70,7 @@
                     <span><i class="far fa-user"></i> Preethi Somaraju</span>
                 </div>
             </header>
-            
+
             <div class="post-content">
                 <h1>Cloud Telemetry ETL Data Pipeline</h1>
 <p>This project deploys a telemetry collection pipeline that consumes sensor events, transforms values, and loads analytics-ready rows into an <strong>Azure SQL Database</strong>.</p>
@@ -87,5 +92,23 @@
             </div>
         </div>
     </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const menu = document.querySelector('#mobile-menu');
+        const menuLinks = document.querySelector('.nav-links');
+
+        menu.addEventListener('click', function() {
+            menu.classList.toggle('is-active');
+            menuLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                menu.classList.remove('is-active');
+                menuLinks.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
