@@ -19,3 +19,7 @@ Preethi-Profile/
 # Large downloaded datasets -- don't commit raw data files
 aws-nyc-taxi-analytics/*.parquet
 aws-nyc-taxi-analytics/__pycache__/
+
+# Ignore AI Agent rules and architecture
+AGENTS.md
+agent_architecture.md
