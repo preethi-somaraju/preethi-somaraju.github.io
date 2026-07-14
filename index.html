@@ -269,6 +269,13 @@ Closes a real skill gap identified from Preethi's actual target job postings: AW
             menu.classList.toggle('is-active');
             menuLinks.classList.toggle('active');
         });
+
+        document.querySelectorAll('.nav-links a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                menu.classList.remove('is-active');
+                menuLinks.classList.remove('active');
+            });
+        });
     </script>
 </body>
 </html>
