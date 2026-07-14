@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Blog & Case Studies | Preethi Somaraju</title>
+    <meta name="description" content="Technical blog and project case studies detailing architectures in data science, cloud ETL pipelines, and machine learning models.">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .blog-section { padding: 120px 0 80px 0; min-height: 80vh; }
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; margin-top: 40px; }
+        .blog-card { background: rgba(15, 23, 42, 0.6); border: 1px solid #1e293b; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease; height: 100%; }
+        .blog-card:hover { transform: translateY(-5px); border-color: #38bdf8; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .blog-card-info { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+        .blog-card-meta { display: flex; justify-content: space-between; font-size: 0.85em; color: #888; margin-bottom: 12px; }
+        .blog-card-cat { color: #38bdf8; font-weight: 600; text-transform: uppercase; font-size: 0.8em; letter-spacing: 0.5px; }
+        .blog-card h3 { font-size: 1.3em; font-weight: 700; color: #fff; margin-bottom: 12px; line-height: 1.4; }
+        .blog-card p { color: #94a3b8; line-height: 1.6; font-size: 0.95em; margin-bottom: 20px; flex-grow: 1; }
+        .blog-read-link { color: #38bdf8; text-decoration: none; font-weight: 600; font-size: 0.95em; display: inline-flex; align-items: center; gap: 6px; margin-top: auto; }
+        .blog-read-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">PS<span>.data</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Blog Listing Section -->
+    <section class="blog-section">
+        <div class="container">
+            <span class="badge">Case Studies & Reflections</span>
+            <h1 class="section-title" style="text-align: left; margin-bottom: 10px;">Engineering Blog</h1>
+            <p style="color: #94a3b8; max-width: 600px; font-size: 1.1em; line-height: 1.6;">A log of system architectures, machine learning investigations, and personal developer reflections built over my data career.</p>
+            
+            <div class="blog-grid">
+                
+                <!-- Article: Transitioning from Systems Verification to Data Science: My 12-Year Journey -->
+                <div class="blog-card">
+                    <div class="blog-card-info">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-cat">Personal Reflection</span>
+                            <span>July 14, 2026</span>
+                        </div>
+                        <h3>Transitioning from Systems Verification to Data Science: My 12-Year Journey</h3>
+                        <p>A deep dive into my professional shift from writing automated chipset verification scripts at Qualcomm to engineering production data science pipelines.</p>
+                        <a href="blog/transitioning-to-data-science.html" class="blog-read-link">Read Case Study <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Article: AWS Cloud Analytics Pipeline: NYC Taxi Trip Data -->
+                <div class="blog-card">
+                    <div class="blog-card-info">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-cat">AWS Cloud ETL</span>
+                            <span>July 13, 2026</span>
+                        </div>
+                        <h3>AWS Cloud Analytics Pipeline: NYC Taxi Trip Data</h3>
+                        <p>Re-hosting and analyzing May 2026 NYC Taxi trips via S3, Glue, and Athena.</p>
+                        <a href="blog/aws-nyc-taxi-analytics.html" class="blog-read-link">Read Case Study <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Article: Retail Sales Demand Forecasting -->
+                <div class="blog-card">
+                    <div class="blog-card-info">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-cat">Data Science</span>
+                            <span>July 12, 2026</span>
+                        </div>
+                        <h3>Retail Sales Demand Forecasting</h3>
+                        <p>Time-series regression forecasting model engineered to predict daily store unit sales.</p>
+                        <a href="blog/retail-sales-forecasting.html" class="blog-read-link">Read Case Study <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Article: Sales Data Reporting Pipeline & SQL Analytics -->
+                <div class="blog-card">
+                    <div class="blog-card-info">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-cat">Business Intelligence</span>
+                            <span>June 25, 2026</span>
+                        </div>
+                        <h3>Sales Data Reporting Pipeline & SQL Analytics</h3>
+                        <p>Automated SQLite pipeline compiling sales KPIs for interactive SQL analytics reporting.</p>
+                        <a href="blog/sales-dashboard-sql.html" class="blog-read-link">Read Case Study <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Article: Customer Churn Prediction Machine Learning Model -->
+                <div class="blog-card">
+                    <div class="blog-card-info">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-cat">Machine Learning</span>
+                            <span>June 02, 2026</span>
+                        </div>
+                        <h3>Customer Churn Prediction Machine Learning Model</h3>
+                        <p>Predictive binary classification analyzing customer retention and churn risk metrics.</p>
+                        <a href="blog/customer-churn-ml.html" class="blog-read-link">Read Case Study <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Article: Cloud Telemetry ETL Data Pipeline -->
+                <div class="blog-card">
+                    <div class="blog-card-info">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-cat">Data Engineering</span>
+                            <span>May 10, 2026</span>
+                        </div>
+                        <h3>Cloud Telemetry ETL Data Pipeline</h3>
+                        <p>Automating cloud database replication using Python requests, Pandas, and Azure SQL DB.</p>
+                        <a href="blog/azure-etl-pipeline.html" class="blog-read-link">Read Case Study <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <p>&copy; 2026 Preethi Somaraju. All rights reserved.</p>
+            <div class="footer-socials">
+                <a href="https://www.linkedin.com/in/preethisomaraju/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:somaraju.preethi164@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

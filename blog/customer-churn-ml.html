@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Prediction Machine Learning Model | Preethi Somaraju Blog</title>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .post-container { max-width: 800px; margin: 120px auto 60px auto; padding: 0 20px; }
+        .post-header { margin-bottom: 40px; border-bottom: 1px solid #222; padding-bottom: 30px; }
+        .post-meta { display: flex; gap: 15px; font-size: 0.9em; color: #888; margin-top: 15px; align-items: center; }
+        .post-category { background-color: #0f172a; color: #38bdf8; border: 1px solid #1e293b; padding: 4px 10px; border-radius: 4px; font-weight: 600; font-size: 0.85em; }
+        .post-content h1, .post-content h2, .post-content h3 { color: #ffffff; margin-top: 30px; margin-bottom: 15px; font-weight: 700; letter-spacing: -0.5px; }
+        .post-content h1 { font-size: 2.2em; }
+        .post-content h2 { font-size: 1.6em; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+        .post-content h3 { font-size: 1.25em; }
+        .post-content p { line-height: 1.8; color: #ccc; margin-bottom: 20px; font-size: 1.05em; }
+        .post-content ul { margin-bottom: 25px; padding-left: 20px; }
+        .post-content li { color: #ccc; line-height: 1.8; margin-bottom: 8px; }
+        .post-content a { color: #38bdf8; text-decoration: none; font-weight: 500; }
+        .post-content a:hover { text-decoration: underline; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; color: #888; text-decoration: none; margin-bottom: 30px; transition: color 0.2s; }
+        .back-btn:hover { color: #38bdf8; }
+        pre { background-color: #0f172a; border: 1px solid #1e293b; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 25px 0; }
+        code { font-family: 'Courier New', Courier, monospace; font-size: 0.95em; color: #f1f5f9; }
+        p code { background-color: #0f172a; padding: 2px 6px; border-radius: 4px; border: 1px solid #1e293b; color: #f43f5e; }
+        hr { border: 0; border-top: 1px solid #1e293b; margin: 40px 0; }
+    </style>
+</head>
+<body style="background-color: #030712; color: #e5e7eb;">
+    <!-- Navbar -->
+    <nav class="navbar" style="position: fixed; top: 0; width: 100%; z-index: 1000;">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">PS<span>.data</span></a>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#skills">Skills</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../blog.html" class="active">Blog</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="post-container">
+        <a href="../blog.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+        
+        <article>
+            <header class="post-header">
+                <span class="post-category">Machine Learning</span>
+                <h1 style="color: #ffffff; margin-top: 15px; font-weight: 800; font-size: 2.5em; letter-spacing: -1px; line-height: 1.2;">Customer Churn Prediction Machine Learning Model</h1>
+                <div class="post-meta">
+                    <span><i class="far fa-calendar-alt"></i> June 02, 2026</span>
+                    <span>&bull;</span>
+                    <span><i class="far fa-user"></i> Preethi Somaraju</span>
+                </div>
+            </header>
+            
+            <div class="post-content">
+                <h1>Customer Churn Prediction Machine Learning Model</h1>
+<p>This project builds a predictive classifier model using a <strong>Random Forest Classifier</strong> in Scikit-Learn to detect subscribers likely to churn.</p>
+<h2>📊 Key Highlights</h2>
+<ul>
+<li><strong>Pre-processing</strong>: Categorical encoding, numeric conversion, standard scaling.</li>
+<li><strong>Model</strong>: Random Forest Classifier with grid-search cross-validation.</li>
+<li><strong>Metrics</strong>: Optimized for <strong>Recall</strong> to capture maximum churn risks, achieving an ROC-AUC of 0.84.</li>
+</ul>
+<h2>🏃 Running the Code</h2>
+<pre><code class="language-bash">python churn_prediction.py</code></pre>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <p>&copy; 2026 Preethi Somaraju. All rights reserved.</p>
+            <div class="footer-socials">
+                <a href="https://www.linkedin.com/in/preethisomaraju/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:somaraju.preethi164@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Cloud Analytics Pipeline: NYC Taxi Trip Data | Preethi Somaraju Blog</title>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .post-container { max-width: 800px; margin: 120px auto 60px auto; padding: 0 20px; }
+        .post-header { margin-bottom: 40px; border-bottom: 1px solid #222; padding-bottom: 30px; }
+        .post-meta { display: flex; gap: 15px; font-size: 0.9em; color: #888; margin-top: 15px; align-items: center; }
+        .post-category { background-color: #0f172a; color: #38bdf8; border: 1px solid #1e293b; padding: 4px 10px; border-radius: 4px; font-weight: 600; font-size: 0.85em; }
+        .post-content h1, .post-content h2, .post-content h3 { color: #ffffff; margin-top: 30px; margin-bottom: 15px; font-weight: 700; letter-spacing: -0.5px; }
+        .post-content h1 { font-size: 2.2em; }
+        .post-content h2 { font-size: 1.6em; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+        .post-content h3 { font-size: 1.25em; }
+        .post-content p { line-height: 1.8; color: #ccc; margin-bottom: 20px; font-size: 1.05em; }
+        .post-content ul { margin-bottom: 25px; padding-left: 20px; }
+        .post-content li { color: #ccc; line-height: 1.8; margin-bottom: 8px; }
+        .post-content a { color: #38bdf8; text-decoration: none; font-weight: 500; }
+        .post-content a:hover { text-decoration: underline; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; color: #888; text-decoration: none; margin-bottom: 30px; transition: color 0.2s; }
+        .back-btn:hover { color: #38bdf8; }
+        pre { background-color: #0f172a; border: 1px solid #1e293b; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 25px 0; }
+        code { font-family: 'Courier New', Courier, monospace; font-size: 0.95em; color: #f1f5f9; }
+        p code { background-color: #0f172a; padding: 2px 6px; border-radius: 4px; border: 1px solid #1e293b; color: #f43f5e; }
+        hr { border: 0; border-top: 1px solid #1e293b; margin: 40px 0; }
+    </style>
+</head>
+<body style="background-color: #030712; color: #e5e7eb;">
+    <!-- Navbar -->
+    <nav class="navbar" style="position: fixed; top: 0; width: 100%; z-index: 1000;">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">PS<span>.data</span></a>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#skills">Skills</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../blog.html" class="active">Blog</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="post-container">
+        <a href="../blog.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+        
+        <article>
+            <header class="post-header">
+                <span class="post-category">AWS Cloud ETL</span>
+                <h1 style="color: #ffffff; margin-top: 15px; font-weight: 800; font-size: 2.5em; letter-spacing: -1px; line-height: 1.2;">AWS Cloud Analytics Pipeline: NYC Taxi Trip Data</h1>
+                <div class="post-meta">
+                    <span><i class="far fa-calendar-alt"></i> July 13, 2026</span>
+                    <span>&bull;</span>
+                    <span><i class="far fa-user"></i> Preethi Somaraju</span>
+                </div>
+            </header>
+            
+            <div class="post-content">
+                <h1>AWS Cloud Analytics Pipeline: NYC Taxi Trip Data</h1>
+<h2>Why this project</h2>
+<p>Closes a real skill gap identified from Preethi's actual target job postings: <strong>AWS</strong> (specifically S3, Glue, and Athena), building on her existing SQL and Python foundation.</p>
+<h2>Dataset</h2>
+<ul>
+<li><strong>Source:</strong> NYC Taxi & Limousine Commission (TLC) Trip Record Data, distributed via the <a href="https://registry.opendata.aws/nyc-tlc-trip-records-pds/" target="_blank">AWS Open Data Registry</a></li>
+<li><strong>Format:</strong> Parquet</li>
+<li><strong>Scope:</strong> Latest available month only (currently <code>2026-05</code>), not the full historical archive — keeps the dataset size and any Athena scan costs small.</li>
+</ul>
+<h3>Important correction from the original proposal</h3>
+<p>The original plan assumed AWS Glue could crawl <code>s3://nyc-tlc/...</code> directly. In practice, that bucket <strong>denies <code>s3:ListBucket</code></strong> even to authenticated AWS accounts (confirmed by testing) — TLC serves the actual files through a public CloudFront endpoint instead:</p>
+<pre><code class="language-plaintext">https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2026-05.parquet</code></pre>
+<p>So the real pipeline is:</p>
+<p>1. Download the latest month's Parquet file from the CloudFront URL (<code>download_data.py</code>).</p>
+<p>2. Upload it to <strong>your own</strong> S3 bucket (you own it, so Glue/Athena can actually list and read it).</p>
+<p>3. Point an AWS Glue crawler at your bucket to build the Data Catalog.</p>
+<p>4. Query the cataloged table with Amazon Athena.</p>
+<p>5. Pull results into pandas via <code>boto3</code> for analysis/visualization (<code>analysis.ipynb</code>).</p>
+<h2>Setup</h2>
+<p>1. Create an S3 bucket for this project (pick a globally-unique name), e.g.:</p>
+<pre><code class="language-plaintext">   aws s3 mb s3://YOUR-BUCKET-NAME --profile preethi-portfolio --region us-east-2</code></pre>
+<p>2. Update <code>BUCKET_NAME</code> in <code>download_data.py</code> with that bucket name.</p>
+<p>3. Run <code>pip install -r requirements.txt</code>.</p>
+<p>4. Run <code>python download_data.py</code> to pull the real data and upload it to your bucket.</p>
+<p>5. In the AWS Glue console, create a crawler pointed at <code>s3://YOUR-BUCKET-NAME/trip-data/</code>, run it to populate the Data Catalog.</p>
+<p>6. In Athena, point at the database the crawler created, and run queries against the table (see <code>analysis.ipynb</code> for starter queries).</p>
+<p>7. Use <code>analysis.ipynb</code> to pull Athena query results into pandas and build visualizations.</p>
+<h2>Deliverables</h2>
+<ul>
+<li>[x] AWS Glue Data Catalog table for the trip data (<code>nyc_taxi_portfolio_db.trip_data</code>, 19 columns, schema inferred automatically by the crawler)</li>
+<li>[x] Athena SQL queries exploring trip duration / peak hour trends</li>
+<li>[x] Jupyter notebook with boto3 + pandas analysis and charts (<code>analysis.ipynb</code>)</li>
+<li>[x] Findings below</li>
+</ul>
+<h2>Findings (May 2026 data, 4,038,773 trips)</h2>
+<p>| Metric | Value |</p>
+<p>|---|---|</p>
+<p>| Total trips | 4,038,773 |</p>
+<p>| Average trip distance | 4.98 miles |</p>
+<p>| Average fare | $21.56 |</p>
+<p>| Average trip duration | 19.0 minutes |</p>
+<p><strong>Peak hour:</strong> 6 PM (279,829 trips), followed closely by 5 PM (272,245 trips) — the two busiest hours of the day, consistent with the evening commute.</p>
+<p><strong>Quietest hour:</strong> 2 AM (55,893 trips) — roughly 5x fewer trips than peak.</p>
+<p><strong>Longest average trips:</strong> 3 PM (~22.8 minutes average) and 2 PM (~22.2 minutes) — likely mid-afternoon traffic congestion rather than distance, since average trip distance during these hours is actually *shorter* than early-morning hours.</p>
+<p><strong>Shortest average trips:</strong> 2 AM (~14.0 minutes) — consistent with light overnight traffic.</p>
+<p>!<a href="nyc_taxi_hourly_trends.png" target="_blank">Hourly trip trends</a></p>
+<h2>Tech stack</h2>
+<p>AWS S3, AWS Glue, Amazon Athena, boto3, pandas, IAM Identity Center (SSO)</p>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <p>&copy; 2026 Preethi Somaraju. All rights reserved.</p>
+            <div class="footer-socials">
+                <a href="https://www.linkedin.com/in/preethisomaraju/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:somaraju.preethi164@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
