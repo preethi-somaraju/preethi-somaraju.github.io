@@ -29,6 +29,10 @@
         code { font-family: 'Courier New', Courier, monospace; font-size: 0.95em; color: #f1f5f9; }
         p code { background-color: #0f172a; padding: 2px 6px; border-radius: 4px; border: 1px solid #1e293b; color: #f43f5e; }
         hr { border: 0; border-top: 1px solid #1e293b; margin: 40px 0; }
+        .post-content table { width: 100%; border-collapse: collapse; margin: 20px 0 30px 0; }
+        .post-content th, .post-content td { border: 1px solid #1e293b; padding: 10px 14px; text-align: left; }
+        .post-content th { background-color: #0f172a; color: #38bdf8; font-weight: 600; }
+        .post-content td { color: #ccc; }
     </style>
 </head>
 <body style="background-color: #030712; color: #e5e7eb;">
@@ -92,23 +96,25 @@
 <p>7. Use <code>analysis.ipynb</code> to pull Athena query results into pandas and build visualizations.</p>
 <h2>Deliverables</h2>
 <ul>
-<li>[x] AWS Glue Data Catalog table for the trip data (<code>nyc_taxi_portfolio_db.trip_data</code>, 19 columns, schema inferred automatically by the crawler)</li>
-<li>[x] Athena SQL queries exploring trip duration / peak hour trends</li>
-<li>[x] Jupyter notebook with boto3 + pandas analysis and charts (<code>analysis.ipynb</code>)</li>
-<li>[x] Findings below</li>
+<li>&#10003; AWS Glue Data Catalog table for the trip data (<code>nyc_taxi_portfolio_db.trip_data</code>, 19 columns, schema inferred automatically by the crawler)</li>
+<li>&#10003; Athena SQL queries exploring trip duration / peak hour trends</li>
+<li>&#10003; Jupyter notebook with boto3 + pandas analysis and charts (<code>analysis.ipynb</code>)</li>
+<li>&#10003; Findings below</li>
 </ul>
 <h2>Findings (May 2026 data, 4,038,773 trips)</h2>
-<p>| Metric | Value |</p>
-<p>|---|---|</p>
-<p>| Total trips | 4,038,773 |</p>
-<p>| Average trip distance | 4.98 miles |</p>
-<p>| Average fare | $21.56 |</p>
-<p>| Average trip duration | 19.0 minutes |</p>
+<table>
+<thead><tr><th>Metric</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Total trips</td><td>4,038,773</td></tr>
+<tr><td>Average trip distance</td><td>4.98 miles</td></tr>
+<tr><td>Average fare</td><td>$21.56</td></tr>
+<tr><td>Average trip duration</td><td>19.0 minutes</td></tr>
+</tbody></table>
 <p><strong>Peak hour:</strong> 6 PM (279,829 trips), followed closely by 5 PM (272,245 trips) — the two busiest hours of the day, consistent with the evening commute.</p>
 <p><strong>Quietest hour:</strong> 2 AM (55,893 trips) — roughly 5x fewer trips than peak.</p>
 <p><strong>Longest average trips:</strong> 3 PM (~22.8 minutes average) and 2 PM (~22.2 minutes) — likely mid-afternoon traffic congestion rather than distance, since average trip distance during these hours is actually *shorter* than early-morning hours.</p>
 <p><strong>Shortest average trips:</strong> 2 AM (~14.0 minutes) — consistent with light overnight traffic.</p>
-<p>!<a href="nyc_taxi_hourly_trends.png" target="_blank">Hourly trip trends</a></p>
+<p><img src="../aws-nyc-taxi-analytics/nyc_taxi_hourly_trends.png" alt="Hourly trip trends" style="max-width: 100%; border-radius: 8px; margin: 15px 0;"></p>
 <h2>Tech stack</h2>
 <p>AWS S3, AWS Glue, Amazon Athena, boto3, pandas, IAM Identity Center (SSO)</p>
             </div>
