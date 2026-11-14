@@ -1,281 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preethi Somaraju | Cloud Data Engineer | AWS Solutions Architect (in progress)</title>
-    <meta name="description" content="Portfolio of Preethi Somaraju, Cloud Data Engineer in Houston, TX. AWS (S3, Glue, Athena), Azure Data Factory, Terraform, SQL and Python. Preparing for AWS Solutions Architect - Associate.">
-    <!-- Google Fonts - Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS Link -->
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preethi Somaraju — Cloud Data Engineer</title>
+<meta name="description" content="Preethi Somaraju, data engineer in Houston, TX. Twelve years building data pipelines; now working in AWS cloud architecture.">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">PS<span>.data</span></a>
-            <ul class="nav-links">
-                <li><a href="index.html#home">Home</a></li>
-                <li><a href="index.html#about">About</a></li>
-                <li><a href="index.html#skills">Skills</a></li>
-                <li><a href="index.html#projects">Projects</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-            </ul>
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="hero-background"></div>
-        <div class="container hero-container">
-            <div class="hero-content">
-                <span class="badge">Available for Work</span>
-                <h1>Building Data Platforms That <span class="highlight">Run on the Cloud</span></h1>
-                <p>Hi, I'm <strong>Preethi Somaraju</strong>. A data engineer with 12 years of experience, now focused on <strong>AWS cloud architecture</strong>. I design ingestion pipelines, data lakes and the infrastructure around them &mdash; and I'm preparing for the <strong>AWS Solutions Architect &ndash; Associate</strong> certification.</p>
-                <div class="hero-btns">
-                    <a href="#projects" class="btn btn-primary">View My Work</a>
-                    <a href="https://www.linkedin.com/in/preethisomaraju/" target="_blank" class="btn btn-secondary"><i class="fab fa-linkedin"></i> Connect on LinkedIn</a>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="data-sphere">
-                    <div class="orbit orbit-1"></div>
-                    <div class="orbit orbit-2"></div>
-                    <div class="orbit orbit-3"></div>
-                    <i class="fas fa-chart-line central-icon"></i>
-                </div>
-            </div>
-        </div>
-    </section>
+<main>
 
-    <!-- About Section -->
-    <section id="about" class="about-section">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>From Data Pipelines to Cloud Architecture</h3>
-                    <p>I have built my career at the intersection of systems engineering, test automation, and advanced data science. My journey spans writing automated chipset verification scripts at <strong>Qualcomm</strong>, designing cloud analytics architectures at the <strong>University of North Texas</strong>, and delivering production-ready dashboards and predictive engines for business clients as a <strong>Freelance Data Scientist</strong>.</p>
-                    <p>I specialize in translating raw, high-volume database streams into executive-level KPIs. I believe that data is only as good as the decisions it enables—which is why I focus deeply on building robust data infrastructure and translating complex statistics into clear, actionable business visual stories.</p>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <h4>12+</h4>
-                            <p>Years Experience</p>
-                        </div>
-                        <div class="stat-card">
-                            <h4>AWS</h4>
-                            <p>SAA &ndash; Associate (studying)</p>
-                        </div>
-                        <div class="stat-card">
-                            <h4>5+</h4>
-                            <p>Cloud &amp; Data Projects</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <header class="masthead">
+    <h1>Preethi Somaraju</h1>
+    <p class="standfirst">Data engineer, Houston TX. Twelve years building the pipelines
+    that reporting runs on &mdash; now working in AWS cloud architecture.</p>
+    <p class="meta">
+      <a href="mailto:somaraju.preethi164@gmail.com">Email</a> ·
+      <a href="https://www.linkedin.com/in/preethisomaraju/">LinkedIn</a> ·
+      <a href="https://github.com/preethi-somaraju">GitHub</a> ·
+      <a href="blog.html">Writing</a>
+    </p>
+  </header>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills-section">
-        <div class="container">
-            <h2 class="section-title">Technical Expertise</h2>
-            <div class="skills-grid">
-                <!-- Skill Card 1 -->
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-code"></i></div>
-                    <h3>Languages</h3>
-                    <p>Python, SQL (BigQuery, PostgreSQL, SQLite), R Programming, Bash</p>
-                </div>
-                <!-- Skill Card 2 -->
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-cloud"></i></div>
-                    <h3>AWS &amp; Cloud</h3>
-                    <p>AWS (S3, Glue, Athena, IAM, VPC, Lambda), Microsoft Azure (Data Factory, Blob Storage, Azure SQL), Google Cloud Platform</p>
-                </div>
-                <!-- Skill Card 3 -->
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-chart-pie"></i></div>
-                    <h3>BI & Visualization</h3>
-                    <p>Tableau Desktop, Power BI, Matplotlib, Seaborn, RStudio</p>
-                </div>
-                <!-- Skill Card 4 -->
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-brain"></i></div>
-                    <h3>Machine Learning</h3>
-                    <p>Pandas, NumPy, Scikit-Learn, TensorFlow, PyTorch, MLflow, Time Series (ARIMA, LSTM)</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <section>
+    <h2>Now</h2>
+    <p>Moving from data analytics into cloud architecture. My cloud work started on
+    Azure &mdash; an ingestion pipeline on Data Factory, Blob Storage and Azure SQL
+    that replaced manual data collection. I'm building the same depth on AWS, and
+    preparing for the Solutions Architect &ndash; Associate certification.</p>
+    <p>The projects below are the record of that: the AWS work is the most recent,
+    and the direction I'm heading.</p>
+  </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects-section">
-        <div class="container">
-            <h2 class="section-title">Key Projects</h2>
-            <div class="projects-grid">
-                <!-- PROJECTS_START -->
-                <!-- Project: AWS Cloud Analytics Pipeline: NYC Taxi Trip Data -->
-                <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/aws-nyc-taxi-analytics" target="_blank" class="project-card-link">
-                <div class="project-card" style="width: 100%;">
-                    <div class="project-img">
-                        <div class="project-overlay"><i class="fas fa-link"></i></div>
-                        <i class="fas fa-database project-icon-bg"></i>
-                    </div>
-                    <div class="project-info">
-                        <span class="project-tag">AWS Cloud & ETL</span>
-                        <h3>AWS Cloud Analytics Pipeline: NYC Taxi Trip Data</h3>
-                        <p> Why this project
-Closes a real skill gap identified from Preethi's actual target job postings: AWS specifically S3, Glue, and Athena, building on her existing SQL and Python foundation.</p>
-                        <div class="project-tech">
-                            <span>Python</span><span>SQL</span><span>AWS</span><span>Glue</span>
-                        </div>
-                    </div>
-                </div>
-                </a>
+  <section>
+    <h2>Projects</h2>
+    <ul class="list">
+      <li>
+        <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/aws-nyc-taxi-analytics">AWS analytics pipeline on NYC taxi data</a>
+        <p>S3, Glue and Athena over NYC TLC trip records. Partitioned to keep
+        scanned bytes &mdash; and cost &mdash; down. The public bucket refuses direct
+        listing, so the data is re-hosted from its CloudFront endpoint first.</p>
+        <p class="tech">AWS · S3 · Glue · Athena · Python</p>
+      </li>
+      <li>
+        <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/azure-etl-pipeline">Cloud telemetry ETL pipeline</a>
+        <p>Consumes sensor events, transforms values, loads analytics-ready rows
+        into Azure SQL.</p>
+        <p class="tech">Azure Data Factory · Azure SQL · Python</p>
+      </li>
+      <li>
+        <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/sales-dashboard-sql">Sales reporting pipeline</a>
+        <p>Automated collection that aggregates transactions and runs the analytical
+        queries behind a reporting layer.</p>
+        <p class="tech">SQL · Python · SQLite</p>
+      </li>
+      <li>
+        <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/retail-sales-forecasting">Retail demand forecasting</a>
+        <p>Regression time-series model over daily sales, with seasonal lag features
+        and rolling averages.</p>
+        <p class="tech">Python · scikit-learn · pandas</p>
+      </li>
+      <li>
+        <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/customer-churn-ml">Customer churn prediction</a>
+        <p>Random forest classifier identifying subscribers likely to churn.</p>
+        <p class="tech">Python · scikit-learn</p>
+      </li>
+    </ul>
+  </section>
 
-                <!-- Project: Cloud Telemetry ETL Data Pipeline -->
-                <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/azure-etl-pipeline" target="_blank" class="project-card-link">
-                <div class="project-card" style="width: 100%;">
-                    <div class="project-img">
-                        <div class="project-overlay"><i class="fas fa-link"></i></div>
-                        <i class="fas fa-database project-icon-bg"></i>
-                    </div>
-                    <div class="project-info">
-                        <span class="project-tag">Azure Cloud & ETL</span>
-                        <h3>Cloud Telemetry ETL Data Pipeline</h3>
-                        <p>This project deploys a telemetry collection pipeline that consumes sensor events, transforms values, and loads analytics-ready rows into an Azure SQL Database.</p>
-                        <div class="project-tech">
-                            <span>Python</span><span>SQL</span><span>Azure</span><span>Pandas</span>
-                        </div>
-                    </div>
-                </div>
-                </a>
+  <section>
+    <h2>Experience</h2>
+    <ul class="list">
+      <li>
+        <strong>Independent consultant</strong>
+        <p>Dashboards, forecasting and ETL automation for client businesses.
+        Python pipelines for ingestion, entity resolution and scenario modelling.</p>
+      </li>
+      <li>
+        <strong>University of North Texas</strong> &mdash; cloud data engineering
+        <p>Built an Azure ingestion pipeline (Data Factory, Blob Storage, Azure SQL)
+        automating campus data collection. Forecasting models for enrolment and
+        energy consumption.</p>
+      </li>
+      <li>
+        <strong>Qualcomm</strong> &mdash; senior data analyst / test engineer
+        <p>Python parsing of hardware test telemetry at volume, cutting manual
+        verification cycles. Variance analysis and SQL automation behind a
+        performance governance framework.</p>
+      </li>
+    </ul>
+  </section>
 
-                <!-- Project: Customer Churn Prediction Machine Learning Model -->
-                <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/customer-churn-ml" target="_blank" class="project-card-link">
-                <div class="project-card" style="width: 100%;">
-                    <div class="project-img">
-                        <div class="project-overlay"><i class="fas fa-link"></i></div>
-                        <i class="fas fa-robot project-icon-bg"></i>
-                    </div>
-                    <div class="project-info">
-                        <span class="project-tag">Machine Learning</span>
-                        <h3>Customer Churn Prediction Machine Learning Model</h3>
-                        <p>This project builds a predictive classifier model using a Random Forest Classifier in Scikit-Learn to detect subscribers likely to churn.</p>
-                        <div class="project-tech">
-                            <span>Python</span><span>Scikit-Learn</span>
-                        </div>
-                    </div>
-                </div>
-                </a>
+  <section>
+    <h2>Tools</h2>
+    <dl class="tools">
+      <dt>Cloud</dt><dd>AWS (S3, Glue, Athena, IAM, VPC, Lambda) · Azure (Data Factory, Blob Storage, Azure SQL) · GCP</dd>
+      <dt>Languages</dt><dd>Python · SQL · R · Bash</dd>
+      <dt>Data</dt><dd>ETL pipelines · data modelling · pandas · scikit-learn</dd>
+      <dt>Reporting</dt><dd>Tableau · Power BI</dd>
+      <dt>Education</dt><dd>MS Data Science, University of North Texas</dd>
+    </dl>
+  </section>
 
-                <!-- Project: Retail Sales Demand Forecasting -->
-                <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/retail-sales-forecasting" target="_blank" class="project-card-link">
-                <div class="project-card" style="width: 100%;">
-                    <div class="project-img">
-                        <div class="project-overlay"><i class="fas fa-link"></i></div>
-                        <i class="fas fa-database project-icon-bg"></i>
-                    </div>
-                    <div class="project-info">
-                        <span class="project-tag">Azure Cloud & ETL</span>
-                        <h3>Retail Sales Demand Forecasting</h3>
-                        <p>This repository houses a regression-based time-series demand forecasting model. It is designed to ingest raw daily sales transaction data, engineer seasonal lag features and rolling averages, and pred...</p>
-                        <div class="project-tech">
-                            <span>Python</span><span>SQL</span>
-                        </div>
-                    </div>
-                </div>
-                </a>
+  <footer>
+    <p>Houston, Texas · <a href="mailto:somaraju.preethi164@gmail.com">somaraju.preethi164@gmail.com</a></p>
+  </footer>
 
-                <!-- Project: Sales Data Reporting Pipeline & SQL Analytics -->
-                <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/sales-dashboard-sql" target="_blank" class="project-card-link">
-                <div class="project-card" style="width: 100%;">
-                    <div class="project-img">
-                        <div class="project-overlay"><i class="fas fa-link"></i></div>
-                        <i class="fas fa-database project-icon-bg"></i>
-                    </div>
-                    <div class="project-info">
-                        <span class="project-tag">Azure Cloud & ETL</span>
-                        <h3>Sales Data Reporting Pipeline & SQL Analytics</h3>
-                        <p>This repository houses an automated data collection pipeline that aggregates transaction records and runs analytical queries for business dashboard visualization.</p>
-                        <div class="project-tech">
-                            <span>SQL</span><span>SQLite</span>
-                        </div>
-                    </div>
-                </div>
-                </a>
-                <!-- PROJECTS_END -->
-            </div>
-        </div>
-    </section>
+</main>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container contact-container">
-            <div class="contact-info-block">
-                <h2>Let's Collaborate</h2>
-                <p>I am open to full-time opportunities in Data Science, Data Analysis, and Business Intelligence. Let's connect to discuss how I can help solve your team's complex data challenges.</p>
-                <div class="contact-details">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>somaraju.preethi164@gmail.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <span>+1-469-618-9055</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Houston, TX (Open to Remote / Hybrid)</span>
-                    </div>
-                </div>
-            </div>
-            <div class="contact-action">
-                <a href="mailto:somaraju.preethi164@gmail.com" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Me an Email</a>
-                <a href="https://www.linkedin.com/in/preethisomaraju/" target="_blank" class="btn btn-secondary"><i class="fab fa-linkedin"></i> Visit LinkedIn Profile</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container footer-container">
-            <p>&copy; 2026 Preethi Somaraju. All rights reserved.</p>
-            <div class="footer-socials">
-                <a href="https://www.linkedin.com/in/preethisomaraju/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="mailto:somaraju.preethi164@gmail.com"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const menu = document.querySelector('#mobile-menu');
-        const menuLinks = document.querySelector('.nav-links');
-
-        menu.addEventListener('click', function() {
-            menu.classList.toggle('is-active');
-            menuLinks.classList.toggle('active');
-        });
-
-        document.querySelectorAll('.nav-links a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                menu.classList.remove('is-active');
-                menuLinks.classList.remove('active');
-            });
-        });
-    </script>
 </body>
 </html>
