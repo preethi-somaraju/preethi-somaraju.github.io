@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Lab 01 — Account foundations | Preethi Somaraju</title>
+<meta name="description" content="Budget alarm, Terraform remote state and locking on a new AWS account, with the controls verified rather than assumed.">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  article { max-width: 44rem; }
+  .post-meta { font-size: .9rem; color: var(--muted); margin: 0 0 2rem; }
+  article h2 { font-size: 1.05rem; text-transform: none; letter-spacing: 0;
+               color: var(--fg); margin: 2.5rem 0 .75rem; }
+  article h3 { font-size: .95rem; margin: 1.75rem 0 .5rem; }
+  pre { background: #11110f; color: #e4e2dd; padding: 1rem; border-radius: 4px;
+        overflow-x: auto; font-size: .82rem; line-height: 1.5; }
+  code { font-size: .88em; }
+  figure { margin: 1.75rem 0; }
+  figure img { width: 100%; border: 1px solid var(--rule); border-radius: 4px; display: block; }
+  figcaption { font-size: .85rem; color: var(--muted); margin-top: .5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 1.25rem 0; }
+  th, td { text-align: left; padding: .4rem .6rem; border-bottom: 1px solid var(--rule); }
+  th { font-weight: 600; }
+  blockquote { margin: 1.5rem 0; padding-left: 1rem; border-left: 2px solid var(--rule);
+               color: var(--muted); }
+  @media (prefers-color-scheme: dark) { pre { background: #0d0d0c; } }
+</style>
+</head>
+<body>
+<main>
+  <article>
+
+    <p class="meta"><a href="../blog.html">← Writing</a></p>
+
+    <h1>Lab 01 — Account foundations: budget, state, and locking</h1>
+    <p class="post-meta">15 November 2026 · AWS data engineering labs, week 1 of 52</p>
+
+    <p>First lab of a year-long series building AWS data engineering depth. Before
+    any pipeline exists, an account needs two things: a limit on what it can cost
+    me, and somewhere durable to keep Terraform state. This lab builds both, and
+    proves the controls hold rather than assuming they do.</p>
+
+    <p>Everything here is free. The point is not the resources — it is the order
+    they get created in.</p>
+
+    <h2>The problem</h2>
+
+    <p>A new AWS account has no spending limit and no state management, and two
+    failure modes follow.</p>
+
+    <p>The first is cost. AWS bills quietly: a NAT Gateway left running is about
+    $32 a month and announces nothing. By the time a bill arrives the money is
+    already spent.</p>
+
+    <p>The second is state. Terraform keeps a record of what it believes exists.
+    Left on a laptop, that file is a single point of failure — lose it and
+    Terraform will try to create resources that already exist, or drift from
+    reality without saying so.</p>
+
+    <h2>What I built</h2>
+
+    <table>
+      <tr><th>Resource</th><th>Why</th></tr>
+      <tr><td>AWS Budget, $5/month</td><td>Alerts at 50% actual and 100% forecast</td></tr>
+      <tr><td>S3 bucket</td><td>Terraform state: versioned, encrypted, public access blocked</td></tr>
+      <tr><td>DynamoDB table</td><td>State locking, on-demand billing</td></tr>
+    </table>
+
+    <p>Three decisions worth stating.</p>
+
+    <p><strong>The budget comes first.</strong> It is the only resource here whose
+    value is entirely preventative. Creating it alongside later infrastructure
+    would mean the first expensive mistake happens before the alarm exists.</p>
+
+    <p><strong>Versioning on the state bucket is not optional.</strong> A corrupted
+    or truncated state file is recoverable only if a previous version survives.</p>
+
+    <p><strong>The lock table is on-demand, not provisioned.</strong> State locking
+    is a handful of writes a week. Provisioned capacity would cost more than the
+    workload justifies and need capacity planning for no reason.</p>
+
+    <h2>The budget</h2>
+
+    <p>Two notifications, deliberately different in kind:</p>
+
+<pre><code>resource "aws_budgets_budget" "monthly" {
+  name         = "aws-labs-monthly"
+  budget_type  = "COST"
+  limit_amount = var.monthly_budget_usd
+  limit_unit   = "USD"
+  time_unit    = "MONTHLY"
+
+  notification {
+    threshold         = 50
+    threshold_type    = "PERCENTAGE"
+    notification_type = "ACTUAL"
+    comparison_operator        = "GREATER_THAN"
+    subscriber_email_addresses = [var.alert_email]
+  }
+
+  notification {
+    threshold         = 100
+    threshold_type    = "PERCENTAGE"
+    notification_type = "FORECASTED"
+    comparison_operator        = "GREATER_THAN"
+    subscriber_email_addresses = [var.alert_email]
+  }
+}</code></pre>
+
+    <p><code>ACTUAL</code> at 50% fires on money already spent. <code>FORECASTED</code>
+    at 100% fires on AWS's projection of month-end, and is the more useful of the
+    two: it can fire on day three, when actual spend is still small but the
+    run-rate implies trouble.</p>
+
+    <figure>
+      <img src="images/lab-01/01-budget-overview.png" alt="AWS Budgets console showing aws-labs-monthly at $5.00, status Healthy, $0.00 used">
+      <figcaption>The budget after apply: $5.00 limit, Healthy, $0.00 used.</figcaption>
+    </figure>
+
+    <h2>The state bucket</h2>
+
+<pre><code>resource "aws_s3_bucket_public_access_block" "state" {
+  bucket                  = aws_s3_bucket.state.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}</code></pre>
+
+    <p>The account ID goes in the bucket name because S3 bucket names are globally
+    unique across all AWS customers — plain <code>aws-labs-tfstate</code> would
+    collide with someone else's.</p>
+
+    <h2>Testing: six positive, two negative</h2>
+
+    <p>A successful <code>terraform apply</code> means Terraform's API calls
+    returned success. It says nothing about whether the controls work.</p>
+
+    <table>
+      <tr><th>#</th><th>Test</th><th>Expected</th><th>Result</th></tr>
+      <tr><td>T1</td><td>Budget limit</td><td>$5.00 MONTHLY</td><td>Pass</td></tr>
+      <tr><td>T2</td><td>Notifications</td><td>50% actual, 100% forecast</td><td>Pass</td></tr>
+      <tr><td>T3</td><td>Block public access</td><td>four settings true</td><td>Pass</td></tr>
+      <tr><td>T4</td><td>Versioning</td><td>Enabled</td><td>Pass</td></tr>
+      <tr><td>T5</td><td>Encryption</td><td>AES256</td><td>Pass</td></tr>
+      <tr><td>T6</td><td>Lock table billing</td><td>PAY_PER_REQUEST</td><td>Pass</td></tr>
+      <tr><td>N1</td><td>Public policy rejected</td><td>AccessDenied</td><td>Pass</td></tr>
+      <tr><td>N2</td><td>No policy left behind</td><td>NoSuchBucketPolicy</td><td>Pass</td></tr>
+    </table>
+
+    <figure>
+      <img src="images/lab-01/02-s3-block-public-access.png" alt="S3 bucket Permissions tab showing Block all public access turned On and no bucket policy">
+      <figcaption>Block all public access: On. No bucket policy attached.</figcaption>
+    </figure>
+
+    <p>The negative test is the one that taught me something. Attempting to attach
+    a public-read bucket policy:</p>
+
+<pre><code>$ aws s3api put-bucket-policy --bucket aws-labs-tfstate-&lt;account-id&gt; \
+    --policy file://public.json
+
+An error occurred (AccessDenied) when calling the PutBucketPolicy operation:
+User: arn:aws:sts::&lt;account-id&gt;:assumed-role/AWSReservedSSO_AdministratorAccess_.../...
+is not authorized to perform: s3:PutBucketPolicy ... because public policies
+are prevented by the BlockPublicPolicy setting in S3 Block Public Access.</code></pre>
+
+    <p>That ran as <strong>AdministratorAccess</strong>. Block Public Access sits
+    above identity permissions: an administrator cannot grant public access while
+    it is on. The setting has to be turned off first, which is a separate and
+    auditable action. That is a meaningfully stronger guarantee than "no policy
+    currently grants public access."</p>
+
+    <figure>
+      <img src="images/lab-01/03-dynamodb-lock-table.png" alt="DynamoDB table aws-labs-tflock with LockID partition key, on-demand capacity, status Active">
+      <figcaption>The lock table: LockID partition key, on-demand capacity, Active.</figcaption>
+    </figure>
+
+    <h2>What went wrong</h2>
+
+    <p>The negative test passed for the wrong reason the first time:</p>
+
+<pre><code>ParamValidation: Unable to load paramfile file:///tmp/public.json:
+[Errno 2] No such file or directory</code></pre>
+
+    <p>The shell was Git Bash, but <code>aws</code> is the native Windows binary,
+    which does not resolve the MSYS <code>/tmp</code> path. Using
+    <code>file://C:/tmp/public.json</code> fixed it.</p>
+
+    <blockquote>The test was "attaching a public policy should fail", and the
+    command did fail. Reading the exit code alone, it looks like a pass. It was
+    not — the control had not been exercised at all. A negative test only counts
+    when the error returned is the error the test is about.</blockquote>
+
+    <h2>Cost, and what production would need</h2>
+
+    <p>Under $0.05 for the lab's lifetime. Budgets are free, the state objects are
+    kilobytes, and on-demand DynamoDB charges per request.</p>
+
+    <p>The bootstrap has a chicken-and-egg problem: this lab creates the state
+    bucket, so it cannot store its own state there. Its state stays local. That is
+    the normal pattern — most teams bootstrap the backend this way and never
+    migrate the bootstrap itself.</p>
+
+    <p>What a production account would have and this does not: Service Control
+    Policies preventing Block Public Access from being disabled at all,
+    multi-account separation, CloudTrail with log file validation, and budgets per
+    cost-allocation tag rather than one account-wide number.</p>
+
+    <h2>Takeaways</h2>
+
+    <p>Block Public Access overrides identity permissions. Administrator is not a
+    way around it, which is why it is the correct first control on any bucket
+    rather than careful policy writing.</p>
+
+    <p>Forecast alerts beat actual alerts. By the time actual spend crosses a
+    threshold the money is gone; a forecast breach warns that something started
+    billing.</p>
+
+    <p>A test that fails for an unexpected reason is not a passing test.</p>
+
+    <h2>Code</h2>
+
+    <p>Terraform, tests and the full write-up:
+    <a href="https://github.com/preethi-somaraju/aws-labs/tree/main/01-account-foundations">github.com/preethi-somaraju/aws-labs</a></p>
+
+    <h2>References</h2>
+
+    <ul class="list">
+      <li><a href="https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-best-practices.html">AWS Budgets best practices</a></li>
+      <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html">S3 Block Public Access</a></li>
+      <li><a href="https://developer.hashicorp.com/terraform/language/backend/s3">Terraform S3 backend</a></li>
+      <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html">DynamoDB capacity modes</a></li>
+    </ul>
+
+  </article>
+
+  <footer>
+    <p><a href="../index.html">Preethi Somaraju</a> · Houston, Texas</p>
+  </footer>
+</main>
+</body>
+</html>
