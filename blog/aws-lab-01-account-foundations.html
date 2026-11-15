@@ -5,32 +5,68 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AWS Lab 01 — Account foundations | Preethi Somaraju</title>
 <meta name="description" content="Budget alarm, Terraform remote state and locking on a new AWS account, with the controls verified rather than assumed.">
-<link rel="stylesheet" href="../styles.css">
 <style>
-  article { max-width: 44rem; }
-  .post-meta { font-size: .9rem; color: var(--muted); margin: 0 0 2rem; }
-  article h2 { font-size: 1.05rem; text-transform: none; letter-spacing: 0;
-               color: var(--fg); margin: 2.5rem 0 .75rem; }
-  article h3 { font-size: .95rem; margin: 1.75rem 0 .5rem; }
-  pre { background: #11110f; color: #e4e2dd; padding: 1rem; border-radius: 4px;
-        overflow-x: auto; font-size: .82rem; line-height: 1.5; }
-  code { font-size: .88em; }
+  :root {
+    --ink:#16191f; --squid:#232f3e; --muted:#5f6b7a; --rule:#d5dbdb;
+    --link:#0073bb; --code-bg:#f1f3f3; --note:#0073bb; --warn:#ff9900;
+    --page:#ffffff;
+  }
+  html { background: var(--page); }
+  body { background: var(--page); color: var(--ink);
+         font-family: "Amazon Ember","Helvetica Neue",Helvetica,Arial,sans-serif;
+         font-size: 16px; line-height: 1.6; margin: 0; }
+  main { max-width: 50rem; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .crumb { font-size: .82rem; color: var(--muted); margin: 0 0 1.5rem;
+           padding-bottom: .75rem; border-bottom: 1px solid var(--rule); }
+  h1 { font-size: 1.9rem; line-height: 1.25; color: var(--squid);
+       font-weight: 700; margin: 0 0 .5rem; }
+  .post-meta { font-size: .85rem; color: var(--muted); margin: 0 0 2rem; }
+  article h2 { font-size: 1.35rem; color: var(--squid); font-weight: 700;
+               margin: 2.75rem 0 .75rem; padding-bottom: .4rem;
+               border-bottom: 1px solid var(--rule); }
+  article h3 { font-size: 1.05rem; color: var(--squid); font-weight: 700;
+               margin: 1.75rem 0 .5rem; }
+  p { margin: 0 0 1rem; }
+
+  pre { background: var(--code-bg); border-left: 3px solid var(--squid);
+        padding: 1rem 1.1rem; overflow-x: auto; font-size: .84rem;
+        line-height: 1.55; margin: 1.25rem 0;
+        font-family: "Monaco","Menlo","Consolas",monospace; }
+  code { background: var(--code-bg); padding: .1em .35em; border-radius: 2px;
+         font-size: .88em; font-family: "Monaco","Menlo","Consolas",monospace; }
+  pre code { background: none; padding: 0; }
+
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; margin: 1.5rem 0; }
+  th { background: var(--code-bg); color: var(--squid); font-weight: 700;
+       text-align: left; }
+  th, td { border: 1px solid var(--rule); padding: .55rem .7rem; vertical-align: top; }
+
   figure { margin: 1.75rem 0; }
-  figure img { width: 100%; border: 1px solid var(--rule); border-radius: 4px; display: block; }
+  figure img, figure svg { width: 100%; border: 1px solid var(--rule); display: block;
+                           background: #fff; }
   figcaption { font-size: .85rem; color: var(--muted); margin-top: .5rem; }
-  table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 1.25rem 0; }
-  th, td { text-align: left; padding: .4rem .6rem; border-bottom: 1px solid var(--rule); }
-  th { font-weight: 600; }
-  blockquote { margin: 1.5rem 0; padding-left: 1rem; border-left: 2px solid var(--rule);
-               color: var(--muted); }
-  @media (prefers-color-scheme: dark) { pre { background: #0d0d0c; } }
+
+  .note, .warn { padding: .9rem 1.1rem; margin: 1.5rem 0; background: #f1faff;
+                 border-left: 4px solid var(--note); font-size: .94rem; }
+  .warn { background: #fffaf0; border-left-color: var(--warn); }
+  .note strong, .warn strong { color: var(--squid); display: block; margin-bottom: .2rem; }
+  .note p:last-child, .warn p:last-child { margin-bottom: 0; }
+
+  ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+  li { margin-bottom: .35rem; }
+
+  footer { margin-top: 4rem; padding-top: 1.25rem; border-top: 1px solid var(--rule);
+           font-size: .85rem; color: var(--muted); }
 </style>
 </head>
 <body>
 <main>
   <article>
 
-    <p class="meta"><a href="../blog.html">← Writing</a></p>
+    <p class="crumb"><a href="../index.html">Preethi Somaraju</a> &rsaquo; <a href="../blog.html">Writing</a> &rsaquo; AWS data engineering labs &rsaquo; Lab 01</p>
 
     <h1>Lab 01 — Account foundations: budget, state, and locking</h1>
     <p class="post-meta">15 November 2026 · AWS data engineering labs, week 1 of 52</p>
@@ -78,6 +114,11 @@
     <p><strong>The lock table is on-demand, not provisioned.</strong> State locking
     is a handful of writes a week. Provisioned capacity would cost more than the
     workload justifies and need capacity planning for no reason.</p>
+
+    <figure>
+      <img src="images/lab-01/architecture.svg" alt="Terraform CLI writing a state object to Amazon S3 and a LockID item to DynamoDB inside the AWS account, with AWS Budgets sending a threshold-breach email alert">
+      <figcaption>Figure 1. Terraform writes state to S3 and takes a lock in DynamoDB. AWS Budgets watches spend independently and alerts by email.</figcaption>
+    </figure>
 
     <h2>The budget</h2>
 
@@ -186,12 +227,14 @@ are prevented by the BlockPublicPolicy setting in S3 Block Public Access.</code>
     which does not resolve the MSYS <code>/tmp</code> path. Using
     <code>file://C:/tmp/public.json</code> fixed it.</p>
 
-    <blockquote>The test was "attaching a public policy should fail", and the
+    <div class="note"><strong>Note</strong><p>The test was "attaching a public policy should fail", and the
     command did fail. Reading the exit code alone, it looks like a pass. It was
     not — the control had not been exercised at all. A negative test only counts
-    when the error returned is the error the test is about.</blockquote>
+    when the error returned is the error the test is about.</p></div>
 
     <h2>Cost, and what production would need</h2>
+
+    <div class="warn"><strong>Cost</strong><p>Under $0.05 for this lab&rsquo;s lifetime. The expensive mistake this series avoids throughout is a NAT Gateway, at roughly $32/month &mdash; private subnets use VPC endpoints instead.</p></div>
 
     <p>Under $0.05 for the lab's lifetime. Budgets are free, the state objects are
     kilobytes, and on-demand DynamoDB charges per request.</p>
