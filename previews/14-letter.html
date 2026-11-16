@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Letter — one continuous piece of writing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f5f1ea;color:#312b26;font-family:Fraunces,Georgia,serif;
+     font-size:20px;line-height:1.8;font-weight:300;font-optical-sizing:auto;
+     -webkit-font-smoothing:antialiased}
+.sheet{max-width:38rem;margin:0 auto;padding:7rem 2rem 8rem}
+a{color:#312b26;text-decoration:none;border-bottom:1px solid #cbb6a4}
+a:hover{border-bottom-color:#9c6f4f}
+
+h1{font-size:1.5rem;font-weight:400;letter-spacing:.01em;margin-bottom:.1rem}
+.place{color:#8a7c70;font-size:.95rem;font-style:italic;margin-bottom:3.2rem}
+
+p{margin-bottom:1.45rem}
+p.first::first-letter{font-size:3.2rem;float:left;line-height:.85;
+  padding:.1rem .5rem .1rem 0;color:#9c6f4f;font-weight:400}
+
+.aside{font-size:.92rem;color:#8a7c70;font-style:italic;
+       border-left:1px solid #ddd0c2;padding-left:1.1rem;margin:2.2rem 0}
+
+.sign{margin-top:3.2rem;padding-top:1.6rem;border-top:1px solid #e3dace;
+      font-size:.95rem;color:#8a7c70}
+.sign a{margin-right:.5rem}
+
+@media(max-width:40rem){
+  body{font-size:18.5px}
+  .sheet{padding:4rem 1.5rem 5rem}
+}
+</style></head><body>
+<div class="sheet">
+
+  <h1>Preethi Somaraju</h1>
+  <p class="place">Data engineer &mdash; Houston, Texas</p>
+
+  <p class="first">For about ten years I have worked on the unglamorous half of
+  data: getting it out of the systems that produce it, into a shape someone can
+  actually use, reliably enough that nobody has to think about it. That started
+  with hardware test telemetry at Qualcomm, where I learned that data arrives
+  messy and on its own schedule.</p>
+
+  <p>At the University of North Texas I built a cloud ingestion pipeline on
+  Azure &mdash; Data Factory, Blob Storage, Azure SQL &mdash; that replaced a
+  manual collection process, while finishing an MS in Data Science. After that
+  came four years of consulting: ETL automation across client databases,
+  forecasting work, and the reporting layers that made any of it useful to the
+  people paying for it.</p>
+
+  <p>Now I am rebuilding that skill set on AWS, in the open. One lab a week for
+  a year &mdash; from an empty account through Glue, Athena, Iceberg, Kinesis,
+  Redshift and Airflow, to a lakehouse at the end. Terraform for everything,
+  torn down after each one.</p>
+
+  <p class="aside">Every lab records the tests that passed <em>and</em> the ones
+  meant to fail, with real command output. A successful <code>terraform
+  apply</code> is not evidence that anything works.</p>
+
+  <p>The first is <a href="#">account foundations</a> &mdash; on why a budget
+  alarm should exist before any other resource does, and what happens when you
+  ask S3 to make a bucket public while Block Public Access is switched on. The
+  rest follow weekly, and the <a href="#">code is all public</a>.</p>
+
+  <p>Older work sits alongside it: an <a href="#">analytics pipeline over NYC
+  taxi data</a> using S3, Glue and Athena, a
+  <a href="#">cloud telemetry ETL pipeline</a>, and
+  <a href="#">demand forecasting</a> on daily retail sales.</p>
+
+  <p>I am looking for data engineering work in Houston or remote, and I am
+  authorised to work in the US.</p>
+
+  <p class="sign"><a href="#">Email</a> <a href="#">GitHub</a>
+  <a href="#">LinkedIn</a> <a href="#">Writing</a> <a href="#">Résumé</a></p>
+
+</div>
+</body></html>
