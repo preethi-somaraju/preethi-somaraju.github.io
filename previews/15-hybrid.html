@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Preethi Somaraju — Data engineer, Houston</title>
+<meta name="description" content="Data engineer in Houston, Texas. Ten years of pipelines and reporting; currently rebuilding on AWS in the open, one lab a week.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --paper:#f6f2ec;
+    --ink:#2d2823;
+    --soft:#6f665c;
+    --faint:#9a9084;
+    --rule:#e2dacd;
+    --clay:#9c6f4f;
+  }
+
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:Newsreader,Georgia,"Times New Roman",serif;
+    font-optical-sizing:auto; font-weight:300;
+    font-size:20px; line-height:1.78;
+    -webkit-font-smoothing:antialiased;
+    font-feature-settings:"liga","kern";
+  }
+
+  .sheet{max-width:50rem;margin:0 auto;padding:6.5rem 2.5rem 8rem}
+
+  a{color:inherit;text-decoration:none;
+    box-shadow:inset 0 -1px 0 rgba(156,111,79,.45);
+    transition:box-shadow .12s}
+  a:hover{box-shadow:inset 0 -2px 0 var(--clay)}
+
+  /* ---------- masthead ---------- */
+  h1{font-size:2.9rem;font-weight:300;letter-spacing:-.018em;line-height:1.1;
+     margin-bottom:.25rem}
+  .place{font-style:italic;color:var(--soft);font-size:1.1rem;margin-bottom:3.4rem}
+
+  /* ---------- the opening: prose, with one drop cap ---------- */
+  .opening{max-width:34rem;margin-bottom:3.6rem}
+  .opening p{margin-bottom:1.3rem}
+  .opening p:last-child{margin-bottom:0}
+  .opening p:first-child::first-letter{
+    font-size:3.5rem;line-height:.82;float:left;
+    padding:.14em .09em 0 0;color:var(--clay);font-weight:400}
+
+  hr{border:0;border-top:1px solid var(--rule);margin:0 0 2.6rem}
+
+  /* ---------- quiet anchors: label in the margin ---------- */
+  .band{display:grid;grid-template-columns:8.5rem 1fr;gap:2.6rem;
+        margin-bottom:3.4rem}
+  .label{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+         color:var(--faint);font-weight:400;padding-top:.75rem}
+  .band > div:last-child{max-width:34rem}
+
+  .band h2{font-size:1.35rem;font-weight:400;letter-spacing:-.01em;
+           margin-bottom:.7rem}
+  .band p{margin-bottom:1.1rem}
+  .band p:last-child{margin-bottom:0}
+
+  /* ---------- entries with dates in the margin ---------- */
+  .entry{display:grid;grid-template-columns:7rem 1fr;gap:1.6rem;
+         margin-bottom:1.9rem}
+  .entry:last-child{margin-bottom:0}
+  .entry .when{font-size:.86rem;color:var(--faint);padding-top:.55rem;
+               font-variant-numeric:oldstyle-nums;letter-spacing:.02em}
+  .entry h3{font-size:1.08rem;font-weight:500;margin-bottom:.05rem;line-height:1.4}
+  .entry .org{font-style:italic;color:var(--soft);font-size:.98rem;
+              margin-bottom:.25rem}
+  .entry p{font-size:.98rem;color:#55504a;margin-bottom:0;line-height:1.68}
+
+  .note{font-style:italic;color:var(--soft);font-size:.98rem;
+        border-left:1px solid var(--rule);padding-left:1.15rem;margin:1.6rem 0}
+  code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.86em;
+       color:var(--soft)}
+
+  .closing{color:var(--soft);font-size:1rem;max-width:34rem}
+  .closing a{margin-right:.3rem}
+
+  @media(max-width:46rem){
+    body{font-size:18.5px;line-height:1.75}
+    .sheet{padding:3.5rem 1.4rem 5rem}
+    h1{font-size:2.15rem}
+    .place{margin-bottom:2.4rem}
+    .band{grid-template-columns:1fr;gap:.55rem;margin-bottom:2.8rem}
+    .label{padding-top:0}
+    .entry{grid-template-columns:1fr;gap:.15rem;margin-bottom:1.6rem}
+    .entry .when{padding-top:0}
+    .opening p:first-child::first-letter{font-size:3rem}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <h1>Preethi Somaraju</h1>
+  <p class="place">Data engineer &mdash; Houston, Texas</p>
+
+  <div class="opening">
+    <p>For about ten years I have worked on the unglamorous half of data:
+    getting it out of the systems that produce it, into a shape someone can
+    actually use, reliably enough that nobody has to think about it. That
+    started with hardware test telemetry at Qualcomm, where I learned that data
+    arrives messy and on its own schedule.</p>
+
+    <p>Since then: a cloud ingestion pipeline at the University of North Texas,
+    four years of consulting on ETL and forecasting, and now a year of
+    rebuilding that skill set on AWS in the open.</p>
+  </div>
+
+  <hr>
+
+  <div class="band">
+    <div class="label">Now</div>
+    <div>
+      <h2>One AWS lab a week, for a year</h2>
+      <p>Fifty-two labs, from an empty account through Glue, Athena, Iceberg,
+      Kinesis, Redshift and Airflow, ending at a lakehouse. Terraform for
+      everything, torn down after each one.</p>
+
+      <p class="note">Every lab records the tests that passed <em>and</em> the
+      ones meant to fail, with real command output. A successful
+      <code>terraform apply</code> is not evidence that anything works.</p>
+
+      <p>The first is <a href="../blog/aws-lab-01-account-foundations.html">account
+      foundations</a> &mdash; on why a budget alarm should exist before any other
+      resource does, and what happens when you ask S3 to make a bucket public
+      while Block Public Access is switched on. The
+      <a href="https://github.com/preethi-somaraju/aws-labs">code is public</a>,
+      and the rest follow weekly.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="band">
+    <div class="label">Work</div>
+    <div>
+      <div class="entry">
+        <div class="when">2026 —</div>
+        <div>
+          <h3>AWS data engineering labs</h3>
+          <p class="org">Self-directed, in public</p>
+          <p>Infrastructure as code, tested properly, written up including the
+          parts that went wrong.</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="when">2021 — 2024</div>
+        <div>
+          <h3>Freelance data consultant</h3>
+          <p class="org">Dallas Data Science Academy</p>
+          <p>Automated ETL across multi-source client databases, time-series
+          forecasting and scenario modelling, and the reporting layers that made
+          any of it useful to the people paying for it.</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="when">2020 — 2021</div>
+        <div>
+          <h3>Data science intern</h3>
+          <p class="org">University of North Texas</p>
+          <p>Built a cloud ingestion pipeline on Azure Data Factory, Blob
+          Storage and Azure SQL that replaced a manual collection process, while
+          finishing an MS in Data Science.</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="when">2014 — 2019</div>
+        <div>
+          <h3>Data analysis and engineering</h3>
+          <p class="org">Qualcomm, Hyderabad</p>
+          <p>Python tooling to parse high-volume hardware test telemetry,
+          cutting manual verification cycles by a third.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="band">
+    <div class="label">Projects</div>
+    <div>
+      <div class="entry">
+        <div class="when">AWS</div>
+        <div>
+          <h3><a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/aws-nyc-taxi-analytics">Analytics pipeline on NYC taxi data</a></h3>
+          <p>S3, Glue and Athena over trip records, partitioned to keep scanned
+          bytes &mdash; and cost &mdash; down. The public source bucket refuses
+          direct listing, so the data is re-hosted first.</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="when">Azure</div>
+        <div>
+          <h3><a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/azure-etl-pipeline">Cloud telemetry ETL pipeline</a></h3>
+          <p>Sensor events ingested, transformed and loaded into Azure SQL.</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="when">Python</div>
+        <div>
+          <h3><a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/retail-sales-forecasting">Retail demand forecasting</a></h3>
+          <p>Regression time-series model over daily sales, with seasonal lag
+          features and rolling averages.</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="when">Python</div>
+        <div>
+          <h3><a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/customer-churn-ml">Customer churn prediction</a></h3>
+          <p>Random forest classifier identifying subscribers likely to churn.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="band">
+    <div class="label">Elsewhere</div>
+    <div>
+      <p class="closing">I am looking for data engineering work in Houston or
+      remote, and I am authorised to work in the US.</p>
+      <p class="closing" style="margin-top:.9rem">
+        <a href="mailto:somaraju.preethi164@gmail.com">Email</a> &nbsp;·&nbsp;
+        <a href="../blog.html">Writing</a> &nbsp;·&nbsp;
+        <a href="https://github.com/preethi-somaraju">GitHub</a> &nbsp;·&nbsp;
+        <a href="https://www.linkedin.com/in/preethisomaraju/">LinkedIn</a>
+      </p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
