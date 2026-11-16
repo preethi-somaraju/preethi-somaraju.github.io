@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Preethi Somaraju — Cloud Data Engineer</title>
-<meta name="description" content="Preethi Somaraju, data engineer in Houston, TX. Data pipelines and reporting: SQL, Python, ETL. Building depth on AWS through hands-on projects.">
-<link rel="stylesheet" href="styles.css">
+<title>Preethi Somaraju — Data Engineer | AWS, SQL, Python</title>
+<meta name="description" content="Data engineer in Houston, TX. Pipelines, data modelling and reporting in SQL, Python and ETL — currently building AWS depth through a 52-week hands-on lab series.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Preethi Somaraju">
 <meta property="og:title" content="Preethi Somaraju — Data engineer building on AWS">
@@ -14,136 +13,321 @@
 <meta property="og:image" content="https://preethi-somaraju.github.io/images/og-home.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Preethi Somaraju — Data engineer building on AWS">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Preethi Somaraju — Data engineer building on AWS">
-<meta name="twitter:description" content="Data engineer in Houston, TX. 52 weeks of AWS data engineering labs, built with Terraform, tested and written up.">
+<meta name="twitter:description" content="52 weeks of AWS data engineering labs, built with Terraform, tested and written up.">
 <meta name="twitter:image" content="https://preethi-somaraju.github.io/images/og-home.png">
+<style>
+  :root{
+    --ink:#161c24; --squid:#232f3e; --muted:#5a6672; --line:#e3e7ea;
+    --orange:#ff9900; --link:#0a6bbd; --wash:#f7f9fb; --card:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--card); color:var(--ink);
+    font-family:"Amazon Ember","Segoe UI",-apple-system,"Helvetica Neue",Arial,sans-serif;
+    font-size:17px; line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:60rem;margin:0 auto;padding:0 1.5rem}
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ---- hero ---- */
+  .hero{
+    background:linear-gradient(170deg,#fbfcfd 0%,#f2f6f9 55%,#eef3f7 100%);
+    border-bottom:1px solid var(--line); padding:4.5rem 0 3.5rem;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:.5rem;background:#eaf7ee;
+    color:#1d6f3f;border:1px solid #bfe3cc;border-radius:999px;
+    padding:.3rem .85rem;font-size:.82rem;font-weight:600;margin-bottom:1.25rem;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:#2e9e5b;display:inline-block}
+  .hero h1{
+    font-size:clamp(2.1rem,5vw,3rem);line-height:1.12;color:var(--squid);
+    font-weight:800;letter-spacing:-.02em;margin-bottom:.6rem;
+  }
+  .role{font-size:1.2rem;color:var(--squid);font-weight:600;margin-bottom:.9rem}
+  .role em{color:var(--orange);font-style:normal}
+  .lede{font-size:1.08rem;color:var(--muted);max-width:42rem;margin-bottom:1.75rem}
+  .cta{display:flex;flex-wrap:wrap;gap:.65rem}
+  .btn{
+    display:inline-block;padding:.6rem 1.2rem;border-radius:4px;font-size:.95rem;
+    font-weight:600;border:1px solid var(--squid);
+  }
+  .btn-main{background:var(--squid);color:#fff}
+  .btn-main:hover{background:#31414f;text-decoration:none}
+  .btn-ghost{background:transparent;color:var(--squid)}
+  .btn-ghost:hover{background:#fff;text-decoration:none}
+
+  .stats{display:flex;flex-wrap:wrap;gap:2.5rem;margin-top:2.5rem;
+         padding-top:1.75rem;border-top:1px solid var(--line)}
+  .stat b{display:block;font-size:1.5rem;color:var(--squid);font-weight:800;line-height:1.2}
+  .stat span{font-size:.85rem;color:var(--muted)}
+
+  /* ---- sections ---- */
+  section{padding:3.5rem 0}
+  section + section{border-top:1px solid var(--line)}
+  .eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+           color:var(--orange);margin-bottom:.4rem}
+  h2{font-size:1.65rem;color:var(--squid);font-weight:700;letter-spacing:-.01em;
+     margin-bottom:.6rem}
+  .sec-lede{color:var(--muted);max-width:44rem;margin-bottom:1.75rem}
+
+  /* ---- featured lab series ---- */
+  .feature{
+    background:var(--squid);color:#eef2f5;border-radius:8px;padding:2.25rem 2rem;
+    position:relative;overflow:hidden;
+  }
+  .feature::after{content:"";position:absolute;top:0;left:0;width:5px;height:100%;
+                  background:var(--orange)}
+  .feature h3{font-size:1.4rem;color:#fff;font-weight:700;margin-bottom:.5rem}
+  .feature p{color:#c3ccd4;margin-bottom:1.25rem;max-width:40rem}
+  .feature a{color:#ffc166}
+  .phases{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem}
+  .chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+        color:#dbe3ea;border-radius:3px;padding:.25rem .6rem;font-size:.8rem}
+  .progress{height:5px;background:rgba(255,255,255,.14);border-radius:3px;overflow:hidden;
+            margin-bottom:.5rem}
+  .progress i{display:block;height:100%;width:2%;background:var(--orange)}
+  .progress-label{font-size:.82rem;color:#9fb0bf}
+
+  /* ---- cards ---- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1.1rem}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:6px;
+        padding:1.3rem 1.4rem;transition:border-color .15s,transform .15s}
+  .card:hover{border-color:#b9c4cd;transform:translateY(-2px)}
+  .card h3{font-size:1.02rem;color:var(--squid);font-weight:700;margin-bottom:.35rem}
+  .card p{font-size:.93rem;color:var(--muted);margin-bottom:.8rem}
+  .tags{display:flex;flex-wrap:wrap;gap:.3rem}
+  .tag{background:var(--wash);border:1px solid var(--line);border-radius:3px;
+       padding:.15rem .5rem;font-size:.76rem;color:var(--muted)}
+
+  /* ---- skills ---- */
+  .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1.5rem}
+  .skills h4{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;
+             color:var(--squid);font-weight:700;margin-bottom:.55rem}
+  .skills p{font-size:.93rem;color:var(--muted)}
+
+  /* ---- experience ---- */
+  .job{display:grid;grid-template-columns:9.5rem 1fr;gap:1.25rem;padding:1.1rem 0;
+       border-bottom:1px solid var(--line)}
+  .job:last-child{border-bottom:0}
+  .job .when{font-size:.85rem;color:var(--muted);padding-top:.15rem}
+  .job h3{font-size:1rem;color:var(--squid);font-weight:700}
+  .job .org{font-size:.9rem;color:var(--muted);margin-bottom:.3rem}
+  .job p{font-size:.93rem;color:var(--muted)}
+
+  footer{background:var(--wash);border-top:1px solid var(--line);padding:2.5rem 0;
+         font-size:.92rem;color:var(--muted)}
+  footer a{font-weight:600}
+
+  @media(max-width:38rem){
+    body{font-size:16px}
+    .hero{padding:3rem 0 2.5rem}
+    .stats{gap:1.5rem}
+    .job{grid-template-columns:1fr;gap:.25rem}
+    .feature{padding:1.75rem 1.4rem}
+  }
+</style>
 </head>
 <body>
 
+<header class="hero">
+  <div class="wrap">
+    <span class="badge"><span class="dot"></span> Open to data engineering roles &middot; Houston, TX</span>
+    <h1>Preethi Somaraju</h1>
+    <p class="role">Data Engineer &mdash; <em>building on AWS</em></p>
+    <p class="lede">I build the pipelines and reporting layers that teams actually
+    run on. A decade across semiconductor test, higher education and consulting,
+    now going deep on AWS data engineering &mdash; in public, one lab a week.</p>
+    <div class="cta">
+      <a class="btn btn-main" href="#labs">See the AWS labs</a>
+      <a class="btn btn-ghost" href="https://github.com/preethi-somaraju">GitHub</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/preethisomaraju/">LinkedIn</a>
+      <a class="btn btn-ghost" href="mailto:somaraju.preethi164@gmail.com">Email</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>10+ yrs</b><span>Data engineering &amp; analytics</span></div>
+      <div class="stat"><b>52</b><span>AWS labs planned, 1 shipped</span></div>
+      <div class="stat"><b>MS</b><span>Data Science, UNT</span></div>
+      <div class="stat"><b>Azure</b><span>Production pipeline experience</span></div>
+    </div>
+  </div>
+</header>
+
 <main>
 
-  <header class="masthead">
-    <h1>Preethi Somaraju</h1>
-    <p class="standfirst">Data engineer, Houston TX. I work on the pipelines and reporting
-    that teams use to make decisions &mdash; SQL, Python, and ETL.</p>
-    <p class="meta">
-      <a href="mailto:somaraju.preethi164@gmail.com">Email</a> ·
-      <a href="https://www.linkedin.com/in/preethisomaraju/">LinkedIn</a> ·
-      <a href="https://github.com/preethi-somaraju">GitHub</a> ·
-      <a href="blog.html">Writing</a>
-    </p>
-  </header>
+<section id="labs">
+  <div class="wrap">
+    <p class="eyebrow">What I'm doing now</p>
+    <h2>52 weeks of AWS data engineering labs</h2>
+    <p class="sec-lede">One lab a week for a year, from an empty AWS account to a
+    capstone lakehouse. Terraform for everything, free tier where possible, torn
+    down after each lab.</p>
 
-  <section>
-    <h2>Now</h2>
-    <p>My cloud work started on Azure, building data pipelines during my
-    internship at the University of North Texas while I completed my MS in
-    Data Science. Before that, I worked in data analysis and engineering at
-    Qualcomm in Hyderabad.</p>
-    <p>Since then I have built dashboards and forecasting work as a freelance
-    data consultant, and I am building the same depth on AWS through hands-on
-    personal projects, including an S3, Glue, and Athena pipeline. My AWS
-    experience so far is project-based, and I am keen to grow it in a real
-    team.</p>
-  </section>
+    <div class="feature">
+      <h3>Built, tested, written up &mdash; every week</h3>
+      <p>Each lab records positive <em>and</em> negative tests with real command
+      output, an architecture diagram using official AWS icons, and a write-up
+      that includes what went wrong. A successful <code>terraform apply</code> is
+      not treated as evidence.</p>
+      <div class="phases">
+        <span class="chip">Identity &amp; security</span>
+        <span class="chip">Lake &amp; catalog</span>
+        <span class="chip">Batch ETL</span>
+        <span class="chip">Streaming</span>
+        <span class="chip">Warehousing</span>
+        <span class="chip">Orchestration</span>
+        <span class="chip">Governance &amp; ML</span>
+        <span class="chip">Capstone</span>
+      </div>
+      <div class="progress"><i></i></div>
+      <p class="progress-label">Week 1 of 52 &mdash; Lab 01 shipped</p>
+      <p style="margin-bottom:0">
+        <a href="blog/aws-lab-01-account-foundations.html">Read Lab 01 &rarr;</a>
+        &nbsp;&middot;&nbsp;
+        <a href="https://github.com/preethi-somaraju/aws-labs">Code on GitHub &rarr;</a>
+      </p>
+    </div>
+  </div>
+</section>
 
-  <section>
-    <h2>AWS labs</h2>
-    <p>I'm working through a 52-week series of AWS data engineering labs &mdash;
-    one a week, Terraform for everything, tested and written up. Each one states
-    what it costs before the first command and gets torn down after.</p>
-    <ul class="list">
-      <li>
-        <a href="blog/aws-lab-01-account-foundations.html">Lab 01 &mdash; Account foundations</a>
-        <p>Budget alarm, versioned Terraform state, DynamoDB locking. Eight tests,
-        including one that refused an administrator permission to make a bucket public.</p>
-        <p class="tech">AWS Budgets &middot; S3 &middot; DynamoDB &middot; Terraform</p>
-      </li>
-      <li>
-        <a href="https://github.com/preethi-somaraju/aws-labs">The full plan and code</a>
-        <p>All 52 labs, from account foundations through Glue, Athena, Iceberg,
-        Kinesis, Redshift and Airflow to a capstone lakehouse.</p>
-      </li>
-    </ul>
-  </section>
-
-  <section>
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Selected work</p>
     <h2>Projects</h2>
-    <ul class="list">
-      <li>
-        <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/aws-nyc-taxi-analytics">AWS analytics pipeline on NYC taxi data</a>
-        <p>S3, Glue and Athena over NYC TLC trip records. Partitioned to keep
-        scanned bytes &mdash; and cost &mdash; down. The public bucket refuses direct
-        listing, so the data is re-hosted from its CloudFront endpoint first.</p>
-        <p class="tech">AWS · S3 · Glue · Athena · Python</p>
-      </li>
-      <li>
-        <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/azure-etl-pipeline">Cloud telemetry ETL pipeline</a>
-        <p>Consumes sensor events, transforms values, loads analytics-ready rows
-        into Azure SQL.</p>
-        <p class="tech">Azure Data Factory · Azure SQL · Python</p>
-      </li>
-      <li>
-        <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/sales-dashboard-sql">Sales reporting pipeline</a>
-        <p>Automated collection that aggregates transactions and runs the analytical
-        queries behind a reporting layer.</p>
-        <p class="tech">SQL · Python · SQLite</p>
-      </li>
-      <li>
-        <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/retail-sales-forecasting">Retail demand forecasting</a>
-        <p>Regression time-series model over daily sales, with seasonal lag features
-        and rolling averages.</p>
-        <p class="tech">Python · scikit-learn · pandas</p>
-      </li>
-      <li>
-        <a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/customer-churn-ml">Customer churn prediction</a>
-        <p>Random forest classifier identifying subscribers likely to churn.</p>
-        <p class="tech">Python · scikit-learn</p>
-      </li>
-    </ul>
-  </section>
+    <p class="sec-lede">Pipelines and models built end to end, with the code public.</p>
+    <div class="grid">
+      <article class="card">
+        <h3><a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/aws-nyc-taxi-analytics">AWS analytics pipeline &mdash; NYC taxi</a></h3>
+        <p>S3, Glue and Athena over NYC TLC trip records, partitioned to keep
+        scanned bytes &mdash; and cost &mdash; down.</p>
+        <div class="tags"><span class="tag">AWS</span><span class="tag">S3</span><span class="tag">Glue</span><span class="tag">Athena</span><span class="tag">Python</span></div>
+      </article>
+      <article class="card">
+        <h3><a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/azure-etl-pipeline">Cloud telemetry ETL pipeline</a></h3>
+        <p>Sensor events ingested, transformed and loaded into Azure SQL, replacing
+        manual collection.</p>
+        <div class="tags"><span class="tag">Azure Data Factory</span><span class="tag">Azure SQL</span><span class="tag">Python</span></div>
+      </article>
+      <article class="card">
+        <h3><a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/sales-dashboard-sql">Sales reporting pipeline</a></h3>
+        <p>Automated collection aggregating transactions behind an analytical
+        reporting layer.</p>
+        <div class="tags"><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">SQLite</span></div>
+      </article>
+      <article class="card">
+        <h3><a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/retail-sales-forecasting">Retail demand forecasting</a></h3>
+        <p>Regression time-series model with seasonal lag features and rolling
+        averages over daily sales.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">pandas</span></div>
+      </article>
+      <article class="card">
+        <h3><a href="https://github.com/preethi-somaraju/preethi-somaraju.github.io/tree/main/customer-churn-ml">Customer churn prediction</a></h3>
+        <p>Random forest classifier identifying subscribers likely to churn, with
+        class-imbalance handling.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span></div>
+      </article>
+      <article class="card">
+        <h3><a href="blog.html">Writing</a></h3>
+        <p>Lab write-ups and technical notes &mdash; architecture decisions, test
+        evidence, and the problems hit along the way.</p>
+        <div class="tags"><span class="tag">Technical writing</span></div>
+      </article>
+    </div>
+  </div>
+</section>
 
-  <section>
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Toolkit</p>
+    <h2>What I work with</h2>
+    <div class="skills">
+      <div>
+        <h4>Cloud</h4>
+        <p>AWS (S3, Glue, Athena &mdash; project work) &middot; Azure Data Factory,
+        Blob Storage, Azure SQL &middot; Google Cloud Platform</p>
+      </div>
+      <div>
+        <h4>Languages</h4>
+        <p>Python &middot; SQL (PostgreSQL, BigQuery, SQLite) &middot; R &middot; Bash</p>
+      </div>
+      <div>
+        <h4>Data engineering</h4>
+        <p>ETL pipeline design &middot; data modelling &middot; entity resolution
+        &middot; partitioning and query cost tuning &middot; Terraform</p>
+      </div>
+      <div>
+        <h4>Analytics &amp; reporting</h4>
+        <p>pandas &middot; NumPy &middot; scikit-learn &middot; time-series
+        forecasting &middot; Tableau &middot; Power BI</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Background</p>
     <h2>Experience</h2>
-    <ul class="list">
-      <li>
-        <strong>Freelance data consultant, Dallas Data Science Academy</strong> &mdash; until Dec 2024
-        <p>Dashboards, forecasting and ETL automation for client businesses.
-        Python pipelines for ingestion, entity resolution and scenario modelling.</p>
-      </li>
-      <li>
-        <strong>University of North Texas</strong> &mdash; intern (during MS in Data Science)
-        <p>Built an Azure ingestion pipeline (Data Factory, Blob Storage, Azure SQL)
-        automating campus data collection. Forecasting models for enrolment and
-        energy consumption.</p>
-      </li>
-      <li>
-        <strong>Qualcomm, Hyderabad</strong> &mdash; data analysis and engineering
-        <p>Python parsing of hardware test telemetry at volume, cutting manual
-        verification cycles. Variance analysis and SQL automation behind a
+    <div class="job">
+      <div class="when">Jul 2021 &ndash; Dec 2024</div>
+      <div>
+        <h3>Freelance Data Consultant</h3>
+        <p class="org">Dallas Data Science Academy &middot; Remote</p>
+        <p>Automated ETL pipelines in Python for multi-source client data,
+        time-series forecasting and scenario modelling, and interactive Tableau
+        and Power BI dashboards.</p>
+      </div>
+    </div>
+    <div class="job">
+      <div class="when">Jan 2020 &ndash; Dec 2021</div>
+      <div>
+        <h3>Data Science Intern</h3>
+        <p class="org">University of North Texas &middot; Denton, TX</p>
+        <p>Built a cloud ingestion pipeline on Azure Data Factory, Blob Storage
+        and Azure SQL that replaced manual campus data collection. Forecasting
+        models for enrolment and energy consumption.</p>
+      </div>
+    </div>
+    <div class="job">
+      <div class="when">Aug 2014 &ndash; Dec 2019</div>
+      <div>
+        <h3>Data Analysis and Engineering</h3>
+        <p class="org">Qualcomm &middot; Hyderabad, India</p>
+        <p>Python tooling to parse high-volume hardware test telemetry, cutting
+        manual verification cycles. Variance analysis and SQL automation behind a
         performance governance framework.</p>
-      </li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Tools</h2>
-    <dl class="tools">
-      <dt>Cloud</dt><dd>AWS (S3, Glue, Athena &mdash; project work) · Azure (Data Factory, Blob Storage, Azure SQL) · GCP</dd>
-      <dt>Languages</dt><dd>Python · SQL · R · Bash</dd>
-      <dt>Data</dt><dd>ETL pipelines · data modelling · pandas · scikit-learn</dd>
-      <dt>Reporting</dt><dd>Tableau · Power BI</dd>
-      <dt>Education</dt><dd>MS Data Science, University of North Texas, Jan 2020 &ndash; Dec 2021</dd>
-    </dl>
-  </section>
-
-  <footer>
-    <p>Houston, Texas · <a href="mailto:somaraju.preethi164@gmail.com">somaraju.preethi164@gmail.com</a></p>
-  </footer>
+      </div>
+    </div>
+    <div class="job">
+      <div class="when">Education</div>
+      <div>
+        <h3>MS, Data Science &mdash; Machine Learning specialisation</h3>
+        <p class="org">University of North Texas &middot; Jan 2020 &ndash; Dec 2021</p>
+        <p>BS, Electronics and Communication Engineering.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 </main>
+
+<footer>
+  <div class="wrap">
+    <p><strong style="color:var(--squid)">Open to data engineering roles</strong>
+    &mdash; Houston, TX and remote. Authorized to work in the US; no sponsorship
+    required.</p>
+    <p style="margin-top:.6rem">
+      <a href="mailto:somaraju.preethi164@gmail.com">somaraju.preethi164@gmail.com</a>
+      &middot; <a href="https://www.linkedin.com/in/preethisomaraju/">LinkedIn</a>
+      &middot; <a href="https://github.com/preethi-somaraju">GitHub</a>
+      &middot; <a href="blog.html">Writing</a>
+    </p>
+  </div>
+</footer>
 
 </body>
 </html>
