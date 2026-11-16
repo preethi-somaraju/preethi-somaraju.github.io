@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pipeline — career as a data flow</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:#0b1020;color:#e6ebf4;
+     font-size:16.5px;line-height:1.62;overflow-x:hidden}
+.wrap{max-width:66rem;margin:0 auto;padding:0 1.5rem}
+a{color:#6ee7b7;text-decoration:none}a:hover{text-decoration:underline}
+
+.top{padding:3.4rem 0 1.5rem;text-align:center}
+.top h1{font-size:2.8rem;font-weight:800;letter-spacing:-.03em;color:#fff}
+.top .role{color:#8fa3c0;font-size:1.05rem;margin-top:.3rem}
+.top .role b{color:#fbbf24;font-weight:600}
+.top .lede{max-width:38rem;margin:1rem auto 0;color:#93a4bd;font-size:1rem}
+
+/* the pipeline itself */
+.pipe{padding:2.5rem 0 3.5rem;position:relative}
+.rail{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.rail::before{content:"";position:absolute;top:34px;left:12%;right:12%;height:2px;
+  background:linear-gradient(90deg,#1e3a5f,#2563eb,#7c3aed,#fbbf24)}
+.flow{position:absolute;top:30px;left:12%;width:10px;height:10px;border-radius:50%;
+  background:#fbbf24;box-shadow:0 0 12px #fbbf24;animation:run 4.5s linear infinite}
+.flow:nth-of-type(2){animation-delay:1.5s}
+.flow:nth-of-type(3){animation-delay:3s}
+@keyframes run{from{left:12%}to{left:88%}}
+.node{text-align:center;position:relative;z-index:2}
+.dot{width:70px;height:70px;border-radius:16px;margin:0 auto .8rem;display:grid;
+  place-items:center;background:#111a2e;border:2px solid #24324d;font-size:1.5rem}
+.node.on .dot{border-color:#fbbf24;background:#1a1630;box-shadow:0 0 0 6px rgba(251,191,36,.12)}
+.node h3{font-size:.95rem;color:#fff;font-weight:600}
+.node .yr{font-family:"JetBrains Mono",monospace;font-size:.76rem;color:#6b7f9e;margin-bottom:.3rem}
+.node p{font-size:.84rem;color:#8fa3c0;max-width:13rem;margin:0 auto}
+.stage{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;color:#4a5f82;margin-bottom:.5rem}
+
+.cta{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin-top:2.5rem}
+.btn{padding:.6rem 1.3rem;border-radius:7px;font-size:.92rem;font-weight:600}
+.b1{background:#fbbf24;color:#0b1020}
+.b2{border:1px solid #2b3b58;color:#e6ebf4}
+
+section{padding:3rem 0;border-top:1px solid #16203a}
+h2{font-size:1.55rem;color:#fff;font-weight:700;letter-spacing:-.02em;margin-bottom:.4rem}
+.sub{color:#8fa3c0;margin-bottom:1.6rem;max-width:42rem}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;
+  text-transform:uppercase;color:#fbbf24;margin-bottom:.4rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem}
+.card{background:#101829;border:1px solid #1d2941;border-radius:10px;padding:1.2rem 1.3rem}
+.card h3{font-size:1rem;color:#fff;margin-bottom:.3rem}
+.card p{font-size:.9rem;color:#8fa3c0}
+@media(max-width:46rem){
+  .rail{grid-template-columns:1fr;gap:1.6rem}
+  .rail::before,.flow{display:none}
+}
+</style></head><body>
+<div class="wrap top">
+  <h1>Preethi Somaraju</h1>
+  <p class="role">Data Engineer &mdash; <b>building on AWS</b></p>
+  <p class="lede">Ten years moving data from where it is produced to where
+  decisions get made. Here is the pipeline that got me here.</p>
+</div>
+
+<div class="wrap pipe">
+  <div class="rail">
+    <span class="flow"></span><span class="flow"></span><span class="flow"></span>
+    <div class="node">
+      <div class="stage">Source</div>
+      <div class="dot">⚙</div>
+      <div class="yr">2014 &ndash; 2019</div>
+      <h3>Qualcomm</h3>
+      <p>Parsing hardware test telemetry at volume. Where I learned that data
+      arrives messy.</p>
+    </div>
+    <div class="node">
+      <div class="stage">Transform</div>
+      <div class="dot">☁</div>
+      <div class="yr">2020 &ndash; 2021</div>
+      <h3>UNT &mdash; Azure</h3>
+      <p>Built a cloud ingestion pipeline on Data Factory while finishing an MS
+      in Data Science.</p>
+    </div>
+    <div class="node">
+      <div class="stage">Load</div>
+      <div class="dot">▦</div>
+      <div class="yr">2021 &ndash; 2024</div>
+      <h3>Consulting</h3>
+      <p>ETL automation, forecasting and reporting layers for client
+      businesses.</p>
+    </div>
+    <div class="node on">
+      <div class="stage">Now</div>
+      <div class="dot">▲</div>
+      <div class="yr">2026 &ndash;</div>
+      <h3>AWS, in public</h3>
+      <p>52 weeks of data engineering labs. Terraform, tested, written up.</p>
+    </div>
+  </div>
+  <div class="cta">
+    <a class="btn b1" href="#">See the AWS labs</a>
+    <a class="btn b2" href="#">GitHub</a>
+    <a class="btn b2" href="#">LinkedIn</a>
+    <a class="btn b2" href="#">R&eacute;sum&eacute;</a>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <p class="eyebrow">Currently</p>
+  <h2>52 weeks of AWS data engineering labs</h2>
+  <p class="sub">One lab a week, from an empty account to a capstone lakehouse.
+  Each one records positive and negative tests with real output.</p>
+  <div class="grid">
+    <div class="card"><h3>Week 1 &mdash; Account foundations</h3>
+      <p>Budget alarm, versioned state, locking. Eight tests, two negative.</p></div>
+    <div class="card"><h3>Week 2 &mdash; IAM for data access</h3>
+      <p>Analyst and engineer reach different prefixes, provably.</p></div>
+    <div class="card"><h3>Week 3 &mdash; S3 as a data lake</h3>
+      <p>Zone layout that survives contact with real queries.</p></div>
+  </div>
+</div></section>
+</body></html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>52-week grid — progress is the hero</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:#fcfcfd;color:#16181d;
+     font-size:16.5px;line-height:1.62}
+.wrap{max-width:58rem;margin:0 auto;padding:0 1.5rem}
+a{color:#0d5bd4;text-decoration:none}a:hover{text-decoration:underline}
+.hero{padding:3.6rem 0 2.2rem}
+.av{display:inline-flex;align-items:center;gap:.45rem;background:#ecfdf3;color:#067647;
+    border:1px solid #abefc6;border-radius:999px;padding:.28rem .85rem;font-size:.8rem;
+    font-weight:600;margin-bottom:1.1rem}
+.av i{width:7px;height:7px;border-radius:50%;background:#17b26a;display:block}
+h1{font-size:2.7rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.35rem}
+.role{font-size:1.1rem;color:#5b6472;margin-bottom:1rem}
+.role b{color:#e8820c}
+.lede{color:#5b6472;max-width:40rem;margin-bottom:2rem}
+
+.counter{display:flex;align-items:baseline;gap:.7rem;margin-bottom:.9rem}
+.counter .big{font-size:3.4rem;font-weight:800;letter-spacing:-.04em;line-height:1}
+.counter .of{font-size:1.1rem;color:#8b94a3}
+.counter .lbl{font-size:.9rem;color:#5b6472;margin-left:auto}
+
+.weeks{display:grid;grid-template-columns:repeat(26,1fr);gap:5px;margin-bottom:.8rem}
+.wk{aspect-ratio:1;border-radius:3px;background:#eceff3;border:1px solid #e1e5eb}
+.wk.done{background:#e8820c;border-color:#d4760a}
+.wk.next{background:#fff;border:1.5px dashed #e8820c}
+.legend{display:flex;gap:1.2rem;font-size:.8rem;color:#8b94a3;margin-bottom:2rem}
+.legend i{width:11px;height:11px;border-radius:2px;display:inline-block;
+  vertical-align:-1px;margin-right:.35rem}
+
+.cta{display:flex;flex-wrap:wrap;gap:.6rem}
+.btn{padding:.6rem 1.25rem;border-radius:6px;font-size:.93rem;font-weight:600}
+.b1{background:#16181d;color:#fff}
+.b2{border:1px solid #dde1e7;color:#16181d}
+
+section{padding:2.8rem 0;border-top:1px solid #eceff3}
+.eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:#e8820c;margin-bottom:.35rem}
+h2{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.4rem}
+.sub{color:#5b6472;margin-bottom:1.4rem;max-width:42rem}
+.phase{display:grid;grid-template-columns:3.2rem 1fr;gap:1rem;padding:.7rem 0;
+  border-bottom:1px solid #f1f3f6;align-items:start}
+.phase:last-child{border-bottom:0}
+.phase .n{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:#8b94a3;
+  padding-top:.15rem}
+.phase b{display:block;font-size:.98rem}
+.phase span{font-size:.89rem;color:#5b6472}
+@media(max-width:42rem){
+  .weeks{grid-template-columns:repeat(13,1fr)}
+  h1{font-size:2.1rem}
+}
+</style></head><body>
+<div class="wrap hero">
+  <span class="av"><i></i> Open to data engineering roles · Houston, TX</span>
+  <h1>Preethi Somaraju</h1>
+  <p class="role">Data Engineer &mdash; <b>building on AWS, in public</b></p>
+  <p class="lede">A decade moving data from where it is produced to where
+  decisions get made. Right now I am rebuilding that skill set on AWS &mdash;
+  one lab a week, every week, for a year.</p>
+
+  <div class="counter">
+    <span class="big">01</span><span class="of">/ 52</span>
+    <span class="lbl">labs shipped &mdash; Terraform, tested, written up</span>
+  </div>
+
+  <div class="weeks">
+<div class="wk done" title="Week 1"></div>
+<div class="wk next" title="Week 2"></div>
+<div class="wk" title="Week 3"></div>
+<div class="wk" title="Week 4"></div>
+<div class="wk" title="Week 5"></div>
+<div class="wk" title="Week 6"></div>
+<div class="wk" title="Week 7"></div>
+<div class="wk" title="Week 8"></div>
+<div class="wk" title="Week 9"></div>
+<div class="wk" title="Week 10"></div>
+<div class="wk" title="Week 11"></div>
+<div class="wk" title="Week 12"></div>
+<div class="wk" title="Week 13"></div>
+<div class="wk" title="Week 14"></div>
+<div class="wk" title="Week 15"></div>
+<div class="wk" title="Week 16"></div>
+<div class="wk" title="Week 17"></div>
+<div class="wk" title="Week 18"></div>
+<div class="wk" title="Week 19"></div>
+<div class="wk" title="Week 20"></div>
+<div class="wk" title="Week 21"></div>
+<div class="wk" title="Week 22"></div>
+<div class="wk" title="Week 23"></div>
+<div class="wk" title="Week 24"></div>
+<div class="wk" title="Week 25"></div>
+<div class="wk" title="Week 26"></div>
+<div class="wk" title="Week 27"></div>
+<div class="wk" title="Week 28"></div>
+<div class="wk" title="Week 29"></div>
+<div class="wk" title="Week 30"></div>
+<div class="wk" title="Week 31"></div>
+<div class="wk" title="Week 32"></div>
+<div class="wk" title="Week 33"></div>
+<div class="wk" title="Week 34"></div>
+<div class="wk" title="Week 35"></div>
+<div class="wk" title="Week 36"></div>
+<div class="wk" title="Week 37"></div>
+<div class="wk" title="Week 38"></div>
+<div class="wk" title="Week 39"></div>
+<div class="wk" title="Week 40"></div>
+<div class="wk" title="Week 41"></div>
+<div class="wk" title="Week 42"></div>
+<div class="wk" title="Week 43"></div>
+<div class="wk" title="Week 44"></div>
+<div class="wk" title="Week 45"></div>
+<div class="wk" title="Week 46"></div>
+<div class="wk" title="Week 47"></div>
+<div class="wk" title="Week 48"></div>
+<div class="wk" title="Week 49"></div>
+<div class="wk" title="Week 50"></div>
+<div class="wk" title="Week 51"></div>
+<div class="wk" title="Week 52"></div>
+  </div>
+  <div class="legend">
+    <span><i style="background:#e8820c"></i>shipped</span>
+    <span><i style="background:#fff;border:1.5px dashed #e8820c"></i>in progress</span>
+    <span><i style="background:#eceff3;border:1px solid #e1e5eb"></i>planned</span>
+  </div>
+
+  <div class="cta">
+    <a class="btn b1" href="#">Read Lab 01</a>
+    <a class="btn b2" href="#">GitHub</a>
+    <a class="btn b2" href="#">LinkedIn</a>
+    <a class="btn b2" href="#">R&eacute;sum&eacute;</a>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <p class="eyebrow">The plan</p>
+  <h2>Eight phases, 52 labs</h2>
+  <p class="sub">From an empty AWS account to a capstone lakehouse. Every lab
+  states its cost before the first command and is torn down after.</p>
+  <div class="phase"><div class="n">01–06</div><div><b>Identity &amp; security</b>
+    <span>IAM, permissions boundaries, CloudTrail, KMS, VPC for data services</span></div></div>
+  <div class="phase"><div class="n">07–14</div><div><b>Lake &amp; catalog</b>
+    <span>Partitioning, Parquet, Glue Catalog, Athena tuning, Iceberg, Lake Formation</span></div></div>
+  <div class="phase"><div class="n">15–22</div><div><b>Batch ETL</b>
+    <span>Glue PySpark, bookmarks, schema drift, EMR Serverless, dbt on Fargate</span></div></div>
+  <div class="phase"><div class="n">23–30</div><div><b>Streaming</b>
+    <span>Kinesis, Firehose, Managed Flink, MSK, CDC with DMS, streaming Iceberg</span></div></div>
+  <div class="phase"><div class="n">31–38</div><div><b>Warehousing</b>
+    <span>Redshift Serverless, dist/sort keys, Spectrum, DynamoDB, SCD Type 2</span></div></div>
+  <div class="phase"><div class="n">39–44</div><div><b>Orchestration</b>
+    <span>Step Functions, MWAA, event-driven pipelines, backfills and late data</span></div></div>
+  <div class="phase"><div class="n">45–50</div><div><b>Governance &amp; ML</b>
+    <span>QuickSight, lineage, PII masking with Macie, Feature Store, Bedrock</span></div></div>
+  <div class="phase"><div class="n">51–52</div><div><b>Operations &amp; capstone</b>
+    <span>Pipeline observability, cost, and a full lakehouse end to end</span></div></div>
+</div></section>
+</body></html>

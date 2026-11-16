@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Query — portfolio as a SQL client</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:#f6f7f9;color:#1b2330;
+     font-size:16px;line-height:1.6}
+.app{max-width:70rem;margin:0 auto;background:#fff;min-height:100vh;
+     border-left:1px solid #e2e6ec;border-right:1px solid #e2e6ec}
+.bar{display:flex;align-items:center;gap:.6rem;padding:.7rem 1.2rem;
+     background:#1b2330;color:#cdd6e3;font-family:"JetBrains Mono",monospace;font-size:.82rem}
+.bar .d{width:11px;height:11px;border-radius:50%}
+.tabs{display:flex;border-bottom:1px solid #e2e6ec;font-size:.85rem;
+      font-family:"JetBrains Mono",monospace}
+.tab{padding:.6rem 1.1rem;color:#6b7788;border-right:1px solid #eef1f5;cursor:default}
+.tab.on{color:#1b2330;font-weight:600;border-bottom:2px solid #f59e0b;background:#fffdf7}
+.editor{padding:1.3rem 1.4rem;background:#fbfcfd;border-bottom:1px solid #e2e6ec;
+        font-family:"JetBrains Mono",monospace;font-size:.92rem;line-height:1.75}
+.kw{color:#b91c6b;font-weight:500}.fn{color:#0b7285}.str{color:#1a7f37}.cm{color:#8b95a4}
+.run{display:inline-block;margin-top:.9rem;background:#1b2330;color:#fff;
+     font-family:Inter,sans-serif;font-size:.82rem;font-weight:600;
+     padding:.35rem .9rem;border-radius:4px}
+.meta{padding:.5rem 1.4rem;font-family:"JetBrains Mono",monospace;font-size:.76rem;
+      color:#6b7788;background:#f3f5f8;border-bottom:1px solid #e2e6ec}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#f3f5f8;text-align:left;font-family:"JetBrains Mono",monospace;
+   font-size:.74rem;text-transform:uppercase;letter-spacing:.07em;color:#6b7788;
+   padding:.55rem 1.4rem;border-bottom:1px solid #e2e6ec}
+td{padding:.75rem 1.4rem;border-bottom:1px solid #eef1f5;vertical-align:top}
+td.n{font-family:"JetBrains Mono",monospace;color:#6b7788;font-size:.84rem;white-space:nowrap}
+td b{display:block;color:#1b2330;font-size:.97rem}
+td span{color:#6b7788;font-size:.88rem}
+.pill{display:inline-block;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;
+      border-radius:3px;padding:.1rem .45rem;font-size:.74rem;
+      font-family:"JetBrains Mono",monospace;margin-right:.25rem}
+.hdr{padding:1.6rem 1.4rem 1.2rem;border-bottom:1px solid #e2e6ec}
+.hdr h1{font-size:1.9rem;font-weight:800;letter-spacing:-.025em}
+.hdr p{color:#6b7788;margin-top:.2rem}
+.hdr .av{display:inline-block;background:#ecfdf3;border:1px solid #abefc6;color:#067647;
+         border-radius:999px;padding:.2rem .7rem;font-size:.78rem;font-weight:600;
+         margin-top:.7rem}
+.foot{padding:1.2rem 1.4rem;font-family:"JetBrains Mono",monospace;font-size:.8rem;
+      color:#6b7788}
+.foot a{color:#0b7285}
+</style></head><body>
+<div class="app">
+  <div class="bar">
+    <span class="d" style="background:#ff5f57"></span>
+    <span class="d" style="background:#febc2e"></span>
+    <span class="d" style="background:#28c840"></span>
+    <span style="margin-left:.6rem">preethi@portfolio — athena</span>
+  </div>
+
+  <div class="hdr">
+    <h1>Preethi Somaraju</h1>
+    <p>Data Engineer · Houston, TX · building on AWS</p>
+    <span class="av">● Open to data engineering roles</span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab on">experience.sql</div>
+    <div class="tab">projects.sql</div>
+    <div class="tab">labs.sql</div>
+    <div class="tab">contact.sql</div>
+  </div>
+
+  <div class="editor">
+<span class="cm">-- a decade of moving data to where decisions get made</span><br>
+<span class="kw">SELECT</span> org, role, years, what_i_built<br>
+<span class="kw">FROM</span> preethi.experience<br>
+<span class="kw">WHERE</span> domain <span class="kw">IN</span> (<span class="str">'data engineering'</span>, <span class="str">'cloud'</span>)<br>
+<span class="kw">ORDER BY</span> started <span class="kw">DESC</span>;
+    <div class="run">▶ Run</div>
+  </div>
+
+  <div class="meta">4 rows returned · 0.42s · scanned 2.1 MB</div>
+
+  <table>
+    <tr><th>Years</th><th>Role</th><th>What I built</th></tr>
+    <tr>
+      <td class="n">2026 –</td>
+      <td><b>AWS data engineering labs</b><span>Self-directed, in public</span></td>
+      <td>52 weeks, one lab a week. Terraform, positive and negative tests,
+        written up.
+        <div style="margin-top:.4rem"><span class="pill">Terraform</span><span class="pill">S3</span><span class="pill">Glue</span><span class="pill">Athena</span></div></td>
+    </tr>
+    <tr>
+      <td class="n">2021 – 2024</td>
+      <td><b>Freelance Data Consultant</b><span>Dallas Data Science Academy</span></td>
+      <td>Automated ETL for multi-source client data, forecasting, Tableau and
+        Power BI reporting.
+        <div style="margin-top:.4rem"><span class="pill">Python</span><span class="pill">SQL</span><span class="pill">Tableau</span></div></td>
+    </tr>
+    <tr>
+      <td class="n">2020 – 2021</td>
+      <td><b>Data Science Intern</b><span>University of North Texas</span></td>
+      <td>Cloud ingestion pipeline on Azure Data Factory, Blob Storage and Azure
+        SQL replacing manual collection.
+        <div style="margin-top:.4rem"><span class="pill">Azure</span><span class="pill">XGBoost</span></div></td>
+    </tr>
+    <tr>
+      <td class="n">2014 – 2019</td>
+      <td><b>Data Analysis &amp; Engineering</b><span>Qualcomm, Hyderabad</span></td>
+      <td>Python tooling parsing high-volume hardware test telemetry, cutting
+        manual verification cycles 30%.
+        <div style="margin-top:.4rem"><span class="pill">Python</span><span class="pill">SQL</span></div></td>
+    </tr>
+  </table>
+
+  <div class="foot">
+    <a href="#">github</a> · <a href="#">linkedin</a> · <a href="#">résumé</a> ·
+    <a href="#">writing</a>
+  </div>
+</div>
+</body></html>
