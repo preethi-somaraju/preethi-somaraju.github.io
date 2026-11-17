@@ -70,6 +70,17 @@
     main,.sheet{padding:2.5rem 1.4rem 4rem}
     h1{font-size:2rem}
   }
+
+  .plain{background:#f0ebe1;border-left:3px solid var(--clay);padding:1.1rem 1.3rem;
+         margin:1.8rem 0;font-size:.97rem;max-width:34rem}
+  .plain strong{display:block;font-size:.74rem;letter-spacing:.14em;
+                text-transform:uppercase;color:var(--clay);margin-bottom:.4rem;
+                font-weight:500}
+  .plain p{margin:0 0 .7rem}
+  .plain p:last-child{margin-bottom:0}
+  dl.terms{margin:1.4rem 0;max-width:34rem}
+  dl.terms dt{font-weight:500;margin-top:.9rem}
+  dl.terms dd{margin:.1rem 0 0;color:#55504a;font-size:.96rem}
 </style>
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Preethi Somaraju">
@@ -102,6 +113,17 @@
     <p>Cost: under $0.05. Everything was destroyed afterwards and the teardown
     verified.</p>
 
+    <div class="plain"><strong>In plain terms</strong>
+      <p>Think of the data lake as a restaurant. <em>Raw</em> is the delivery
+      bay where crates arrive unchecked. <em>Curated</em> is the kitchen pass,
+      where everything has been cleaned and is fit to serve. <em>Analytics</em>
+      is the notepad where someone writes down what they worked out.</p>
+      <p>The kitchen staff should be able to reach the delivery bay. The person
+      doing the sums should not &mdash; they only need the pass and their
+      notepad. This lab sets up those rules in AWS so the doors are actually
+      locked, then walks up to each one and tries the handle.</p>
+    </div>
+
     <h2>The problem</h2>
 
     <p>Raw landing data is unconformed and often carries fields nobody has
@@ -112,6 +134,25 @@
     &ldquo;analysts cannot see raw data&rdquo; is a claim with nothing behind
     it. Nobody can demonstrate it, and nobody finds out it was false until
     someone goes looking.</p>
+
+    <div class="plain"><strong>Words used below</strong>
+      <dl class="terms">
+        <dt>S3</dt><dd>Amazon&rsquo;s file storage. A <em>bucket</em> is a
+          container; a <em>prefix</em> is a folder-like path inside it, such as
+          <code>raw/</code>.</dd>
+        <dt>IAM role</dt><dd>A set of permissions you temporarily borrow, like
+          signing out a badge, rather than a permanent key of your own. The
+          badge expires on its own.</dd>
+        <dt>Policy</dt><dd>The written rules attached to a role: what it may do,
+          and to what.</dd>
+        <dt>Permissions boundary</dt><dd>A ceiling. Even if somebody later
+          writes a rule granting more, the boundary still caps it.</dd>
+        <dt>Terraform</dt><dd>A tool that builds cloud infrastructure from a
+          text file, so the setup is repeatable and reviewable instead of
+          clicked together by hand.</dd>
+        <dt>CloudTrail</dt><dd>AWS&rsquo;s record of who did what, and when.</dd>
+      </dl>
+    </div>
 
     <h2>What the roles can do</h2>
 
@@ -213,6 +254,15 @@
     <code>raw/</code> fails because something forbids it. The first is reversed
     by any future policy that grants more; the second is not. That distinction
     is the whole reason the deny is written out rather than left implied.</p>
+
+    <div class="plain"><strong>Put another way</strong>
+      <p>A room with no door and a room with a locked door both keep you out
+      today. But if someone later adds a door to the first room, you can walk
+      in. The locked door stays locked.</p>
+      <p>That is the difference between <em>implicit deny</em> (nothing lets
+      you in) and <em>explicit deny</em> (something keeps you out). For raw
+      data, I wanted the locked door.</p>
+    </div>
 
     <figure>
       <img src="images/lab-02/02-lake-zones.png" alt="The lake bucket showing raw, curated and analytics prefixes">

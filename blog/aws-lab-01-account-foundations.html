@@ -70,6 +70,17 @@
     main,.sheet{padding:2.5rem 1.4rem 4rem}
     h1{font-size:2rem}
   }
+
+  .plain{background:#f0ebe1;border-left:3px solid var(--clay);padding:1.1rem 1.3rem;
+         margin:1.8rem 0;font-size:.97rem;max-width:34rem}
+  .plain strong{display:block;font-size:.74rem;letter-spacing:.14em;
+                text-transform:uppercase;color:var(--clay);margin-bottom:.4rem;
+                font-weight:500}
+  .plain p{margin:0 0 .7rem}
+  .plain p:last-child{margin-bottom:0}
+  dl.terms{margin:1.4rem 0;max-width:34rem}
+  dl.terms dt{font-weight:500;margin-top:.9rem}
+  dl.terms dd{margin:.1rem 0 0;color:#55504a;font-size:.96rem}
 </style>
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Preethi Somaraju">
@@ -102,6 +113,16 @@
     <p>Everything here is free. The point is not the resources — it is the order
     they get created in.</p>
 
+    <div class="plain"><strong>In plain terms</strong>
+      <p>Two things before you build anything on a cloud account: a spending
+      alarm, and a reliable record of what you have built.</p>
+      <p>The alarm matters because cloud bills arrive a month late. The record
+      matters because the tool that builds things needs to know what already
+      exists &mdash; lose it and it will try to build everything twice.</p>
+      <p>This lab sets up both, then tries to break the security setting to
+      check it actually holds.</p>
+    </div>
+
     <h2>The problem</h2>
 
     <p>A new AWS account has no spending limit and no state management, and two
@@ -115,6 +136,25 @@
     Left on a laptop, that file is a single point of failure — lose it and
     Terraform will try to create resources that already exist, or drift from
     reality without saying so.</p>
+
+    <div class="plain"><strong>Words used below</strong>
+      <dl class="terms">
+        <dt>Terraform</dt><dd>A tool that builds cloud infrastructure from a
+          text file, so the setup is repeatable and reviewable rather than
+          clicked together by hand.</dd>
+        <dt>State file</dt><dd>Terraform&rsquo;s own notes on what it has
+          already built. Lose it and the tool no longer knows what exists.</dd>
+        <dt>S3 bucket</dt><dd>A container for files in Amazon&rsquo;s storage
+          service.</dd>
+        <dt>Block Public Access</dt><dd>An S3 switch that stops a bucket being
+          shared with the whole internet, whatever other rules say.</dd>
+        <dt>DynamoDB</dt><dd>A database used here for one small job: making
+          sure two people cannot change the same infrastructure at once.</dd>
+        <dt>NAT Gateway</dt><dd>A networking component, mentioned only because
+          it quietly costs about $32 a month and is the classic way to run up
+          a surprise bill.</dd>
+      </dl>
+    </div>
 
     <h2>What I built</h2>
 
@@ -233,6 +273,15 @@ are prevented by the BlockPublicPolicy setting in S3 Block Public Access.</code>
     it is on. The setting has to be turned off first, which is a separate and
     auditable action. That is a meaningfully stronger guarantee than "no policy
     currently grants public access."</p>
+
+    <div class="plain"><strong>Why that matters</strong>
+      <p>I ran that command with the highest level of access the account has,
+      and it still said no. The protection is not "nobody has asked to share
+      this publicly yet" &mdash; it is a switch that has to be deliberately
+      turned off first, and turning it off leaves a record.</p>
+      <p>Most accidental data leaks are a bucket somebody made public without
+      meaning to. This is the setting that prevents it.</p>
+    </div>
 
     <figure>
       <img src="images/lab-01/03-dynamodb-lock-table.png" alt="DynamoDB table aws-labs-tflock with LockID partition key, on-demand capacity, status Active">
