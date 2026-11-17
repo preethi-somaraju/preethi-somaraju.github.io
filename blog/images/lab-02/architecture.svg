@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 430" width="100%" role="img" aria-label="Lab 02: two roles, three lake zones, a permissions boundary" font-family="Amazon Ember, Helvetica Neue, Arial, sans-serif">
+<defs>
+<symbol id="i-cloudtrail" viewBox="0 0 64 64">
+    
+    <g id="Icon-Architecture/48/Arch_AWS-CloudTrail_48" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon-Architecture-BG/48/Management-Governance" fill="#E7157B">
+            <rect id="Rectangle" x="0" y="0" width="64" height="64"></rect>
+        </g>
+        <path d="M20,41.9738788 L23,41.9738788 L23,39.9608181 L20,39.9608181 L20,41.9738788 Z M22,37.9477575 L28,37.9477575 L28,35.9346969 L22,35.9346969 L22,37.9477575 Z M46.96,30.0636056 C46.734,27.7294618 45.556,26.0133276 43.712,25.3922984 C42.238,24.8970855 40.629,25.1990446 39.351,26.1361243 C38.666,24.6927599 37.688,23.1115007 36.702,22.1331533 C33.472,18.9253412 29.741,18.1754761 25.616,19.9077148 C22.259,21.3118245 19.389,25.410416 19.036,29.1396108 C17.19,29.7938555 15.008,31.2412461 14.074,33.5411678 L15.926,34.3021047 C16.653,32.5114873 18.62,31.288553 20.247,30.8708429 C20.69,30.757105 21,30.3554994 21,29.895515 C21,26.8195584 23.566,22.9454232 26.385,21.7657697 C29.789,20.3354901 32.623,20.9092124 35.298,23.5664524 C36.359,24.6192831 37.535,26.7611796 38.06,28.2236682 C38.184,28.5719277 38.488,28.8225537 38.852,28.8779129 C39.222,28.9372982 39.579,28.783299 39.799,28.4873791 C40.616,27.3942872 41.929,26.9181984 43.078,27.3016864 C44.3,27.7123508 45,29.0248663 45,30.9020453 C45,31.3942387 45.354,31.8139618 45.836,31.8944842 C49.926,32.5789248 52,34.6151357 52,37.9477575 C52,43.7806007 46.611,43.9829133 46,43.9869394 L29,43.9869394 L29,46 L46,46 C48.767,46 54,44.3170813 54,37.9477575 C54,33.8421204 51.509,31.0661098 46.96,30.0636056 L46.96,30.0636056 Z M22,46 L26,46 L26,43.9869394 L22,43.9869394 L22,46 Z M25,41.9738788 L36,41.9738788 L36,39.9608181 L25,39.9608181 L25,41.9738788 Z M11,41.9738788 L18,41.9738788 L18,39.9608181 L11,39.9608181 L11,41.9738788 Z M13,37.9477575 L19,37.9477575 L19,35.9346969 L13,35.9346969 L13,37.9477575 Z M14,46 L20,46 L20,43.9869394 L14,43.9869394 L14,46 Z M10,46 L12,46 L12,43.9869394 L10,43.9869394 L10,46 Z" id="AWS-CloudTrail_Icon_48_Squid" fill="#FFFFFF"></path>
+    </g>
+</symbol>
+<symbol id="i-iam" viewBox="0 0 64 64">
+    
+    <g id="Icon-Architecture/48/Arch_AWS-Identity-and-Access-Management_48" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon-Architecture-BG/48/Security-Identity-Compliance" fill="#DD344C">
+            <rect id="Rectangle" x="0" y="0" width="64" height="64"></rect>
+        </g>
+        <path d="M12,47 L52,47 L52,18 L12,18 L12,47 Z M54,17 L54,48 C54,48.552 53.553,49 53,49 L11,49 C10.447,49 10,48.552 10,48 L10,17 C10,16.448 10.447,16 11,16 L53,16 C53.553,16 54,16.448 54,17 L54,17 Z M35,39 L47,39 L47,37 L35,37 L35,39 Z M45,35 L49,35 L49,33 L45,33 L45,35 Z M35,35 L41,35 L41,33 L35,33 L35,35 Z M22.5,37.5 C22.5,37.776 22.725,38 23,38 C23.275,38 23.5,37.776 23.5,37.5 C23.5,37.224 23.275,37 23,37 C22.725,37 22.5,37.224 22.5,37.5 L22.5,37.5 Z M25.5,37.5 C25.5,38.522 24.882,39.401 24,39.788 L24,42 L22,42 L22,39.788 C21.118,39.401 20.5,38.522 20.5,37.5 C20.5,36.122 21.621,35 23,35 C24.379,35 25.5,36.122 25.5,37.5 L25.5,37.5 Z M16,42.995 L29.995,43 L29.996,41 L27,41 L27,39 L29.997,39 L29.998,37 L27,37 L27,35 L29.999,35 L30,33.005 L16.005,33 L16,42.995 Z M18,31.001 L28.001,31.004 L28.002,26 C28.002,24.976 27.2,24.273 26.722,23.945 C25.847,23.345 24.174,23 23.002,23 L23,23 C20.873,23 18.003,24.232 18.002,26 L18,31.001 Z M14.293,44.701 C14.105,44.513 14,44.259 14,43.994 L14.005,32 C14.005,31.447 14.453,31 15.005,31 L16,31 L16.002,26 C16.003,22.911 19.876,21 23,21 L23.002,21 C24.567,21 26.653,21.473 27.854,22.295 C29.239,23.246 30.003,24.562 30.002,26 L30.001,31.005 L31,31.006 C31.266,31.006 31.52,31.111 31.707,31.299 C31.895,31.487 32,31.741 32,32.006 L31.995,44 C31.995,44.553 31.547,45 30.995,45 L15,44.994 C14.734,44.994 14.48,44.889 14.293,44.701 L14.293,44.701 Z M47,30 L49,30 L49,28 L47,28 L47,30 Z M35,30 L44,30 L44,28 L35,28 L35,30 Z" id="AWS-Identity-and-Access-Management_Icon_48_Squid" fill="#FFFFFF"></path>
+    </g>
+</symbol>
+<symbol id="i-s3" viewBox="0 0 64 64">
+    
+    <g id="Icon-Architecture/48/Arch_Amazon-Simple-Storage-Service_48" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon-Architecture-BG/48/Storage" fill="#7AA116">
+            <rect id="Rectangle" x="0" y="0" width="64" height="64"></rect>
+        </g>
+        <g id="Icon-Service/48/Amazon-Simple-Storage-Service_48" transform="translate(10.999800, 10.000200)" fill="#FFFFFF">
+            <path d="M36.759,23.948 L36.993,22.131 C39.166,23.385 39.842,24.121 40.037,24.424 C39.713,24.485 38.832,24.509 36.759,23.948 L36.759,23.948 Z M19.5,11 C9.125,11 2.382,8.488 2,6.696 L2,6.511 C2.349,5.392 8.14,2 19.5,2 C30.84,2 36.632,5.381 37,6.505 L37,6.616 C36.724,8.446 29.961,11 19.5,11 L19.5,11 Z M34.818,23.362 C30.053,21.797 23.912,18.979 21.594,17.888 C21.535,16.786 20.628,15.906 19.512,15.906 C18.358,15.906 17.418,16.845 17.418,18 C17.418,19.154 18.358,20.094 19.512,20.094 C19.969,20.094 20.389,19.942 20.733,19.693 C23.132,20.822 29.619,23.798 34.558,25.38 L32.837,38.724 C32.583,40.352 27.919,42 19.497,42 C11.072,42 6.405,40.352 6.155,38.751 L2.435,9.814 C5.945,11.915 12.749,13 19.5,13 C26.25,13 33.054,11.915 36.565,9.815 L34.818,23.362 Z M39,6.5 C39,3.431 30.661,0 19.5,0 C8.339,0 -3.55271368e-15,3.431 -3.55271368e-15,6.5 L-3.55271368e-15,7.043 L4.174,39.033 C4.875,43.516 15.123,44 19.497,44 C23.869,44 34.113,43.516 34.818,39.007 L36.501,25.947 C37.778,26.279 38.812,26.456 39.616,26.455 C40.606,26.455 41.273,26.203 41.697,25.697 C42.047,25.281 42.185,24.756 42.085,24.221 C41.857,23 40.403,21.712 37.37,20.044 L37.27,19.989 L39,7.044 L39,6.5 Z" id="Amazon-Simple-Storage-Service-Icon_48_Squid"></path>
+        </g>
+    </g>
+</symbol>
+<marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5f6b7a"/></marker>
+</defs>
+<rect width="820" height="430" fill="#ffffff"/>
+<rect x="238" y="18" width="226" height="250" rx="6" fill="#fafafa" stroke="#879196" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="248" y="36" font-size="11" font-weight="600" fill="#5f6b7a" letter-spacing="0.4">PERMISSIONS BOUNDARY</text>
+<rect x="540" y="18" width="258" height="390" rx="6" fill="#fafafa" stroke="#879196" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="550" y="36" font-size="11" font-weight="600" fill="#5f6b7a" letter-spacing="0.4">S3 LAKE</text>
+<line x1="103" y1="137" x2="295" y2="89" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arw)"/>
+<line x1="103" y1="152" x2="295" y2="201" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arw)"/>
+<line x1="354" y1="82" x2="614" y2="82" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arw)"/>
+<rect x="447" y="66" width="74" height="15" rx="2" fill="#ffffff"/><text x="484" y="76" font-size="10.5" fill="#5f6b7a" text-anchor="middle">read + write</text>
+<line x1="352" y1="93" x2="616" y2="198" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arw)"/>
+<rect x="447" y="130" width="74" height="15" rx="2" fill="#ffffff"/><text x="484" y="140" font-size="10.5" fill="#5f6b7a" text-anchor="middle">read + write</text>
+<line x1="354" y1="209" x2="614" y2="209" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arw)"/>
+<rect x="472" y="193" width="25" height="15" rx="2" fill="#ffffff"/><text x="484" y="203" font-size="10.5" fill="#5f6b7a" text-anchor="middle">read</text>
+<line x1="352" y1="220" x2="616" y2="323" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arw)"/>
+<rect x="447" y="256" width="74" height="15" rx="2" fill="#ffffff"/><text x="484" y="266" font-size="10.5" fill="#5f6b7a" text-anchor="middle">read + write</text>
+<line x1="352" y1="198" x2="616" y2="93" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arw)" stroke-dasharray="4 3"/>
+<rect x="444" y="130" width="81" height="15" rx="2" fill="#ffffff"/><text x="484" y="140" font-size="10.5" fill="#5f6b7a" text-anchor="middle">explicit DENY</text>
+<line x1="324" y1="112" x2="324" y2="324" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arw)" stroke-dasharray="4 3"/>
+<line x1="324" y1="239" x2="324" y2="324" stroke="#5f6b7a" stroke-width="1.5" marker-end="url(#arw)" stroke-dasharray="4 3"/>
+<use href="#i-iam" x="50" y="120" width="48" height="48"/>
+<text x="74" y="182" font-size="12" font-weight="600" fill="#232f3e" text-anchor="middle">Admin identity</text>
+<text x="74" y="196" font-size="10.5" fill="#5f6b7a" text-anchor="middle">sts:AssumeRole</text>
+<use href="#i-iam" x="300" y="58" width="48" height="48"/>
+<text x="324" y="120" font-size="12" font-weight="600" fill="#232f3e" text-anchor="middle">data-engineer</text>
+<text x="324" y="134" font-size="10.5" fill="#5f6b7a" text-anchor="middle">owns raw + curated</text>
+<use href="#i-iam" x="300" y="185" width="48" height="48"/>
+<text x="324" y="247" font-size="12" font-weight="600" fill="#232f3e" text-anchor="middle">data-analyst</text>
+<text x="324" y="261" font-size="10.5" fill="#5f6b7a" text-anchor="middle">reads curated</text>
+<use href="#i-s3" x="620" y="58" width="48" height="48"/>
+<text x="644" y="120" font-size="12" font-weight="600" fill="#232f3e" text-anchor="middle">raw/</text>
+<text x="644" y="134" font-size="10.5" fill="#5f6b7a" text-anchor="middle">landing</text>
+<use href="#i-s3" x="620" y="185" width="48" height="48"/>
+<text x="644" y="247" font-size="12" font-weight="600" fill="#232f3e" text-anchor="middle">curated/</text>
+<text x="644" y="261" font-size="10.5" fill="#5f6b7a" text-anchor="middle">business-readable</text>
+<use href="#i-s3" x="620" y="310" width="48" height="48"/>
+<text x="644" y="372" font-size="12" font-weight="600" fill="#232f3e" text-anchor="middle">analytics/</text>
+<text x="644" y="386" font-size="10.5" fill="#5f6b7a" text-anchor="middle">query results</text>
+<use href="#i-cloudtrail" x="300" y="330" width="48" height="48"/>
+<text x="324" y="392" font-size="12" font-weight="600" fill="#232f3e" text-anchor="middle">CloudTrail</text>
+<text x="324" y="406" font-size="10.5" fill="#5f6b7a" text-anchor="middle">separate bucket</text>
+</svg>

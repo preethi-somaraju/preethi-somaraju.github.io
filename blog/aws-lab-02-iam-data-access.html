@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Lab 02 — IAM for data access | Preethi Somaraju</title>
+<meta name="description" content="Two roles, three lake zones and a permissions boundary — with every boundary proven by trying to cross it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--paper:#f6f2ec;--ink:#2d2823;--soft:#6f665c;--faint:#9a9084;
+        --rule:#e2dacd;--clay:#9c6f4f;--code:#efe9df}
+  body{background:var(--paper);color:var(--ink);
+       font-family:Newsreader,Georgia,"Times New Roman",serif;
+       font-optical-sizing:auto;font-weight:300;font-size:20px;line-height:1.78;
+       -webkit-font-smoothing:antialiased;font-feature-settings:"liga","kern"}
+  main,.sheet{max-width:46rem;margin:0 auto;padding:4rem 2.5rem 7rem}
+  a{color:inherit;text-decoration:none;
+    box-shadow:inset 0 -1px 0 rgba(156,111,79,.45);transition:box-shadow .12s}
+  a:hover{box-shadow:inset 0 -2px 0 var(--clay)}
+  .crumb{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--faint);margin-bottom:2.4rem}
+  .crumb a{box-shadow:none;border-bottom:1px solid var(--rule)}
+  h1{font-size:2.5rem;font-weight:300;letter-spacing:-.018em;line-height:1.14;
+     margin-bottom:.3rem}
+  .post-meta,.standfirst{font-style:italic;color:var(--soft);font-size:1.08rem;
+                         margin-bottom:2.8rem}
+  h2{font-size:1.42rem;font-weight:400;letter-spacing:-.01em;
+     margin:3rem 0 .8rem;padding-bottom:.35rem;border-bottom:1px solid var(--rule)}
+  h3{font-size:1.1rem;font-weight:500;margin:2rem 0 .5rem}
+  p{margin-bottom:1.15rem;max-width:34rem}
+  ul{margin:0 0 1.15rem;padding-left:1.25rem;max-width:34rem}
+  li{margin-bottom:.3rem}
+  pre{background:var(--code);border-left:2px solid var(--clay);
+      padding:1.1rem 1.25rem;overflow-x:auto;font-size:.8rem;line-height:1.6;
+      margin:1.5rem 0;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+      color:#4a443d}
+  code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+       font-size:.84em;background:var(--code);padding:.08em .32em;border-radius:2px}
+  pre code{background:none;padding:0}
+  table{width:100%;border-collapse:collapse;font-size:.94rem;margin:1.6rem 0}
+  th{text-align:left;font-weight:500;font-size:.78rem;letter-spacing:.12em;
+     text-transform:uppercase;color:var(--faint);padding:.4rem .7rem .4rem 0;
+     border-bottom:1px solid var(--rule)}
+  td{padding:.55rem .7rem .55rem 0;border-bottom:1px solid #ece5da;
+     vertical-align:top;color:#55504a}
+  figure{margin:2rem 0}
+  figure img{width:100%;border:1px solid var(--rule);display:block;background:#fff}
+  figcaption{font-size:.9rem;font-style:italic;color:var(--soft);margin-top:.6rem}
+  .note,.warn{font-style:italic;color:var(--soft);font-size:1rem;
+              border-left:1px solid var(--rule);padding-left:1.2rem;margin:1.8rem 0;
+              background:none;max-width:34rem}
+  .warn{border-left-color:var(--clay)}
+  .note strong,.warn strong{display:block;font-style:normal;font-weight:500;
+        font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--faint);margin-bottom:.25rem}
+  .note p,.warn p{margin:0}
+  footer{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--rule);
+         font-size:.95rem;color:var(--soft)}
+  footer p{margin:0}
+  ul.list{list-style:none;padding:0}
+  ul.list > li{margin-bottom:1.8rem}
+  ul.list > li > a{font-size:1.12rem;font-weight:500}
+  ul.list p{margin:.25rem 0 0;color:#55504a;font-size:.98rem}
+  .tech{font-size:.85rem;color:var(--faint);font-style:italic}
+  @media(max-width:46rem){
+    body{font-size:18.5px}
+    main,.sheet{padding:2.5rem 1.4rem 4rem}
+    h1{font-size:2rem}
+  }
+</style>
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Preethi Somaraju">
+<meta property="og:title" content="Lab 02 — IAM for data access: proving the zone boundary holds">
+<meta property="og:description" content="An analyst and an engineer reach different parts of an S3 data lake, and neither can escalate. Eighteen tests, including the one that failed for the wrong reason.">
+<meta property="og:url" content="https://preethi-somaraju.github.io/blog/aws-lab-02-iam-data-access.html">
+<meta property="og:image" content="https://preethi-somaraju.github.io/images/og-lab-02.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lab 01 — Account foundations: budget, state, and locking">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lab 02 — IAM for data access: proving the zone boundary holds">
+<meta name="twitter:description" content="An analyst and an engineer reach different parts of an S3 data lake, and neither can escalate.">
+<meta name="twitter:image" content="https://preethi-somaraju.github.io/images/og-lab-02.png">
+</head>
+<body>
+<main>
+  <article>
+
+    <p class="crumb"><a href="../index.html">Preethi Somaraju</a> &rsaquo; <a href="../blog.html">Writing</a> &rsaquo; AWS data engineering labs &rsaquo; Lab 02</p>
+
+    <h1>Lab 02 &mdash; IAM for data access: proving the zone boundary holds</h1>
+    <p class="post-meta">16 November 2026 &middot; AWS data engineering labs, week 2 of 52</p>
+
+    <p>A data lake has zones &mdash; raw, curated, analytics &mdash; and the
+    zones exist because different people should see different things. Usually
+    that separation is a naming convention and an honour system. This lab makes
+    it an enforced control, and then tries to cross it.</p>
+
+    <p>Cost: under $0.05. Everything was destroyed afterwards and the teardown
+    verified.</p>
+
+    <h2>The problem</h2>
+
+    <p>Raw landing data is unconformed and often carries fields nobody has
+    cleared for general use. Curated data is the version the business is allowed
+    to read. Analytics output is where query results land.</p>
+
+    <p>With one shared set of credentials reaching all three prefixes,
+    &ldquo;analysts cannot see raw data&rdquo; is a claim with nothing behind
+    it. Nobody can demonstrate it, and nobody finds out it was false until
+    someone goes looking.</p>
+
+    <h2>What the roles can do</h2>
+
+    <table>
+      <tr><th>Principal</th><th>Must succeed</th><th>Must be denied</th></tr>
+      <tr><td><code>data-engineer</code></td><td>read + write <code>raw/</code> and <code>curated/</code></td><td>writing <code>analytics/</code>; creating IAM users</td></tr>
+      <tr><td><code>data-analyst</code></td><td>read <code>curated/</code>, read + write <code>analytics/</code></td><td>any read of <code>raw/</code>; writing <code>curated/</code></td></tr>
+      <tr><td>either</td><td>&mdash;</td><td>attaching a policy to itself</td></tr>
+    </table>
+
+    <p>Every row became a test.</p>
+
+    <figure>
+      <img src="images/lab-02/architecture.svg" alt="Two IAM roles inside a permissions boundary reaching three S3 zones, with CloudTrail recording every call">
+      <figcaption>Figure 1. The engineer owns the path from landing to curated. The analyst consumes curated and writes only where query results belong. Neither role spans the whole bucket.</figcaption>
+    </figure>
+
+    <h2>Four decisions worth stating</h2>
+
+    <p><strong>The analyst can write to <code>analytics/</code>.</strong> Athena
+    has to put results somewhere. A least-privilege design that forgets this
+    produces a role that cannot run a query &mdash; which is how least-privilege
+    attempts actually fail in practice, by being quietly worked around.</p>
+
+    <p><strong>The engineer cannot write to <code>analytics/</code>.</strong>
+    Separation runs both ways, so a pipeline bug cannot overwrite someone&rsquo;s
+    query output.</p>
+
+    <p><strong><code>raw/</code> is an explicit <code>Deny</code> for the
+    analyst, not an absent allow.</strong> An absent allow is reversed the
+    moment any later policy grants the action. An explicit deny is not.</p>
+
+    <p><strong><code>ListBucket</code> is constrained by
+    <code>s3:prefix</code>.</strong> Without that condition the analyst could
+    enumerate <code>raw/</code> &mdash; leaking schema, volume and naming
+    conventions &mdash; while still being unable to read a single object.</p>
+
+    <p>Lake Formation is the right tool for table- and column-level grants and
+    is deliberately absent: there is no Glue catalog until week 9, so using it
+    here would mean demonstrating it against nothing.</p>
+
+    <h2>The permissions boundary</h2>
+
+    <p>This is what makes the lab more than a naive least-privilege exercise. It
+    caps what either role can ever reach, regardless of what its own identity
+    policy says:</p>
+
+<pre><code>data "aws_iam_policy_document" "boundary" {
+  statement {
+    sid       = "DataPlaneWork"
+    actions   = ["s3:*", "athena:*", "glue:*", "logs:*", "sts:GetCallerIdentity"]
+    resources = ["*"]
+  }
+
+  statement {
+    sid       = "NoIdentitySelfService"
+    effect    = "Deny"
+    actions   = ["iam:*", "organizations:*", "account:*"]
+    resources = ["*"]
+  }
+}</code></pre>
+
+    <p>Neither role&rsquo;s identity policy mentions IAM at all. The boundary is
+    what stops a role granting itself more.</p>
+
+    <figure>
+      <img src="images/lab-02/03-terraform-plan.png" alt="A real terminal running terraform plan, showing Plan: 17 to add">
+      <figcaption>Figure 2. Every command line in these terminal figures was printed by bash under <code>set -x</code> from the command it was about to run, so a figure cannot show one command and execute another. The shell scripts are committed beside the images.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/lab-02/04-terraform-apply.png" alt="A real terminal running terraform apply, ending with Apply complete! Resources: 17 added">
+      <figcaption>Figure 3. The apply, with the three lake zones being created.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/lab-02/01-analyst-role-boundary.png" alt="The analyst role in the IAM console showing Permissions boundary set">
+      <figcaption>Figure 4. <em>Permissions boundary (set)</em> on the analyst role.</figcaption>
+    </figure>
+
+    <h2>Testing: eighteen cases, two stages</h2>
+
+    <p>A successful <code>terraform apply</code> means Terraform&rsquo;s API
+    calls returned success. It says nothing about whether the policies do what
+    they claim.</p>
+
+    <p><strong>Stage one</strong> used
+    <code>aws iam simulate-principal-policy</code>, which answers &ldquo;would
+    this be allowed&rdquo; without creating a single object. Ten cases, all as
+    expected. The interesting pair:</p>
+
+    <table>
+      <tr><th>Principal</th><th>Action</th><th>Resource</th><th>Result</th></tr>
+      <tr><td>analyst</td><td><code>s3:PutObject</code></td><td><code>curated/</code></td><td><strong>implicitDeny</strong></td></tr>
+      <tr><td>analyst</td><td><code>s3:GetObject</code></td><td><code>raw/</code></td><td><strong>explicitDeny</strong></td></tr>
+    </table>
+
+    <p>Writing to <code>curated/</code> fails because nothing allows it. Reading
+    <code>raw/</code> fails because something forbids it. The first is reversed
+    by any future policy that grants more; the second is not. That distinction
+    is the whole reason the deny is written out rather than left implied.</p>
+
+    <figure>
+      <img src="images/lab-02/02-lake-zones.png" alt="The lake bucket showing raw, curated and analytics prefixes">
+      <figcaption>Figure 5. The three zones.</figcaption>
+    </figure>
+
+    <p><strong>Stage two</strong> ran real calls under assumed sessions. As the
+    analyst:</p>
+
+<pre><code>$ aws s3api get-object --bucket lab-data-lake-a1b2c3d4 \
+    --key raw/sample.txt /tmp/leak.txt
+
+An error occurred (AccessDenied) when calling the GetObject operation:
+User: arn:aws:sts::&lt;account-id&gt;:assumed-role/lab-data-analyst/ana-raw is not
+authorized to perform: s3:GetObject on resource:
+"arn:aws:s3:::lab-data-lake-a1b2c3d4/raw/sample.txt"
+with an explicit deny in an identity-based policy</code></pre>
+
+    <p>AWS names the mechanism itself: <em>with an explicit deny in an
+    identity-based policy</em>. And listing is refused before any object is
+    touched:</p>
+
+<pre><code>$ aws s3 ls s3://lab-data-lake-a1b2c3d4/raw/
+An error occurred (AccessDenied) when calling the ListObjectsV2 operation: Access Denied</code></pre>
+
+    <h2>What went wrong</h2>
+
+    <p>A negative test reported a <em>false failure</em>. The
+    analyst-reads-<code>raw/</code> check came back as a failure:</p>
+
+<pre><code>fatal error: An error occurred (403) when calling the HeadObject operation: Forbidden</code></pre>
+
+    <p>The assertion was looking for <code>AccessDenied</code> and did not find
+    it. The cause: <code>aws s3 cp</code> issues a <code>HeadObject</code>
+    before the <code>GET</code>, and a denied HEAD returns a bare
+    <code>403 Forbidden</code> with no reason attached &mdash; S3 deliberately
+    does not explain itself on a HEAD. The access was correctly denied. The
+    assertion was too narrow.</p>
+
+    <div class="note"><strong>Note</strong><p>This is the mirror of the usual
+    trap. The familiar failure mode is a test that passes for the wrong reason;
+    this one failed for the wrong reason, and taking it at face value would have
+    meant debugging a policy that was already correct. For IAM work:
+    <code>aws s3</code> tells you <em>that</em> something failed,
+    <code>aws s3api</code> tells you <em>what stopped it</em>.</p></div>
+
+    <h2>Teardown, verified</h2>
+
+    <figure>
+      <img src="images/lab-02/05-terraform-destroy.png" alt="A real terminal running terraform destroy, ending with Destroy complete! Resources: 17 destroyed">
+      <figcaption>Figure 6. Both roles, the permissions boundary and both buckets come down.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/lab-02/06-verify-clean.png" alt="A real terminal running the teardown verifier, showing Clean: nothing left behind">
+      <figcaption>Figure 7. &ldquo;I ran destroy&rdquo; and &ldquo;nothing is left&rdquo; are different claims. The verifier checks resources tagged for the series and, separately, the services that bill whether tagged or not. Only Lab 01&rsquo;s permanent three remain.</figcaption>
+    </figure>
+
+    <h2>Takeaways</h2>
+
+    <p>An explicit deny and an absent allow look identical until someone adds a
+    policy. The simulator distinguishes them &mdash; <code>explicitDeny</code>
+    versus <code>implicitDeny</code> &mdash; and that difference is worth
+    designing around.</p>
+
+    <p>Constraining <code>ListBucket</code> with <code>s3:prefix</code> matters
+    more than it looks. Object keys leak schema, partitioning and volume. A role
+    that cannot read <code>raw/</code> but can list it still learns a great
+    deal.</p>
+
+    <p>Least privilege fails in practice by being too tight, not too loose. An
+    analyst role that cannot write query results cannot run a query, so somebody
+    widens it in a hurry and the care is lost. Designing in the write path to
+    <code>analytics/</code> from the start is what keeps the rest intact.</p>
+
+    <h2>What production would need</h2>
+
+    <p>Service Control Policies so the boundary cannot simply be detached, Lake
+    Formation for table- and column-level grants, separate accounts per
+    environment, CloudTrail log file validation feeding an alerting pipeline,
+    and access reviewed on a schedule rather than only at creation. None of that
+    is implemented here.</p>
+
+    <h2>Code</h2>
+
+    <p>Terraform, tests, the command scripts behind each terminal figure, and
+    the full write-up:
+    <a href="https://github.com/preethi-somaraju/aws-labs/tree/main/02-iam-roles-least-privilege">github.com/preethi-somaraju/aws-labs</a></p>
+
+    <h2>References</h2>
+
+    <ul class="list">
+      <li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html">IAM policy evaluation logic</a></li>
+      <li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html">Permissions boundaries for IAM entities</a></li>
+      <li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html">Testing IAM policies with the policy simulator</a></li>
+      <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazon-s3-policy-keys.html">Amazon S3 condition keys</a></li>
+    </ul>
+
+  </article>
+
+  <footer>
+    <p><a href="../index.html">Preethi Somaraju</a> &middot; Houston, Texas</p>
+  </footer>
+</main>
+</body>
+</html>
