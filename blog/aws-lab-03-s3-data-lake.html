@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Lab 03 — S3 as a data lake | Preethi Somaraju</title>
+<meta name="description" content="Zone layout enforced by the bucket itself, lifecycle rules per zone, and the S3 storage that is billed but appears in no listing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--paper:#f6f2ec;--ink:#2d2823;--soft:#6f665c;--faint:#9a9084;
+        --rule:#e2dacd;--clay:#9c6f4f;--code:#efe9df}
+  body{background:var(--paper);color:var(--ink);
+       font-family:Newsreader,Georgia,"Times New Roman",serif;
+       font-optical-sizing:auto;font-weight:300;font-size:20px;line-height:1.78;
+       -webkit-font-smoothing:antialiased;font-feature-settings:"liga","kern"}
+  main,.sheet{max-width:46rem;margin:0 auto;padding:4rem 2.5rem 7rem}
+  a{color:inherit;text-decoration:none;
+    box-shadow:inset 0 -1px 0 rgba(156,111,79,.45);transition:box-shadow .12s}
+  a:hover{box-shadow:inset 0 -2px 0 var(--clay)}
+  .crumb{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--faint);margin-bottom:2.4rem}
+  .crumb a{box-shadow:none;border-bottom:1px solid var(--rule)}
+  h1{font-size:2.5rem;font-weight:300;letter-spacing:-.018em;line-height:1.14;
+     margin-bottom:.3rem}
+  .post-meta,.standfirst{font-style:italic;color:var(--soft);font-size:1.08rem;
+                         margin-bottom:2.8rem}
+  h2{font-size:1.42rem;font-weight:400;letter-spacing:-.01em;
+     margin:3rem 0 .8rem;padding-bottom:.35rem;border-bottom:1px solid var(--rule)}
+  h3{font-size:1.1rem;font-weight:500;margin:2rem 0 .5rem}
+  p{margin-bottom:1.15rem;max-width:34rem}
+  ul{margin:0 0 1.15rem;padding-left:1.25rem;max-width:34rem}
+  li{margin-bottom:.3rem}
+  pre{background:var(--code);border-left:2px solid var(--clay);
+      padding:1.1rem 1.25rem;overflow-x:auto;font-size:.8rem;line-height:1.6;
+      margin:1.5rem 0;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+      color:#4a443d}
+  code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+       font-size:.84em;background:var(--code);padding:.08em .32em;border-radius:2px}
+  pre code{background:none;padding:0}
+  table{width:100%;border-collapse:collapse;font-size:.94rem;margin:1.6rem 0}
+  th{text-align:left;font-weight:500;font-size:.78rem;letter-spacing:.12em;
+     text-transform:uppercase;color:var(--faint);padding:.4rem .7rem .4rem 0;
+     border-bottom:1px solid var(--rule)}
+  td{padding:.55rem .7rem .55rem 0;border-bottom:1px solid #ece5da;
+     vertical-align:top;color:#55504a}
+  figure{margin:2rem 0}
+  figure img{width:100%;border:1px solid var(--rule);display:block;background:#fff}
+  figcaption{font-size:.9rem;font-style:italic;color:var(--soft);margin-top:.6rem}
+  .note,.warn{font-style:italic;color:var(--soft);font-size:1rem;
+              border-left:1px solid var(--rule);padding-left:1.2rem;margin:1.8rem 0;
+              background:none;max-width:34rem}
+  .warn{border-left-color:var(--clay)}
+  .note strong,.warn strong{display:block;font-style:normal;font-weight:500;
+        font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--faint);margin-bottom:.25rem}
+  .note p,.warn p{margin:0}
+  footer{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--rule);
+         font-size:.95rem;color:var(--soft)}
+  footer p{margin:0}
+  ul.list{list-style:none;padding:0}
+  ul.list > li{margin-bottom:1.8rem}
+  ul.list > li > a{font-size:1.12rem;font-weight:500}
+  ul.list p{margin:.25rem 0 0;color:#55504a;font-size:.98rem}
+  .tech{font-size:.85rem;color:var(--faint);font-style:italic}
+  @media(max-width:46rem){
+    body{font-size:18.5px}
+    main,.sheet{padding:2.5rem 1.4rem 4rem}
+    h1{font-size:2rem}
+  }
+
+  .plain{background:#f0ebe1;border-left:3px solid var(--clay);padding:1.1rem 1.3rem;
+         margin:1.8rem 0;font-size:.97rem;max-width:34rem}
+  .plain strong{display:block;font-size:.74rem;letter-spacing:.14em;
+                text-transform:uppercase;color:var(--clay);margin-bottom:.4rem;
+                font-weight:500}
+  .plain p{margin:0 0 .7rem}
+  .plain p:last-child{margin-bottom:0}
+  dl.terms{margin:1.4rem 0;max-width:34rem}
+  dl.terms dt{font-weight:500;margin-top:.9rem}
+  dl.terms dd{margin:.1rem 0 0;color:#55504a;font-size:.96rem}
+</style>
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Preethi Somaraju">
+<meta property="og:title" content="Lab 03 — S3 as a data lake: a layout you cannot violate">
+<meta property="og:description" content="Thirteen tests on an S3 lake: the bucket refuses writes outside its zones, a copied encryption policy turns out to protect nothing, and 5 MiB of billed storage hides from every listing.">
+<meta property="og:url" content="https://preethi-somaraju.github.io/blog/aws-lab-03-s3-data-lake.html">
+<meta property="og:image" content="https://preethi-somaraju.github.io/images/og-lab-03.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lab 03 — S3 as a data lake: a layout you cannot violate">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lab 03 — S3 as a data lake: a layout you cannot violate">
+<meta name="twitter:description" content="A bucket that refuses to let you break its own layout — and the storage you pay for that no listing shows.">
+<meta name="twitter:image" content="https://preethi-somaraju.github.io/images/og-lab-03.png">
+</head>
+<body>
+<main>
+  <article>
+
+    <p class="crumb"><a href="../index.html">Preethi Somaraju</a> &rsaquo; <a href="../blog.html">Writing</a> &rsaquo; AWS data engineering labs &rsaquo; Lab 03</p>
+
+    <h1>Lab 03 &mdash; S3 as a data lake: a layout you cannot violate</h1>
+    <p class="post-meta">26 November 2026 &middot; AWS data engineering labs, week 3 of 52</p>
+
+    <p>Last week two roles were given different reach into three zones of a
+    data lake, and the boundary between them was tested by trying to cross it.
+    This week the same zones become something the storage itself enforces
+    &mdash; and the lab turns up 5 MiB of storage that was being paid for and
+    that no listing would show.</p>
+
+    <div class="plain"><strong>In plain terms</strong>
+      <p>A data lake is just a very large folder in the cloud where a company
+      keeps its data. It is usually split into sections: one for data exactly
+      as it arrived, one for the cleaned-up version, one for the results of
+      people&rsquo;s queries.</p>
+      <p>Normally those sections are a convention &mdash; everyone agrees to
+      put things in the right place. This lab makes the storage refuse the
+      wrong place, sets rules for how old data ages out, and then goes looking
+      for anything the bill is charging for that nobody can see.</p>
+    </div>
+
+    <div class="plain"><strong>Words used below</strong>
+      <dl class="terms">
+        <dt>S3</dt><dd>Amazon&rsquo;s file storage. A <em>bucket</em> is a
+        named container; a <em>prefix</em> is the folder-like start of a file
+        name, such as <code>raw/</code>.</dd>
+        <dt>Bucket policy</dt><dd>Rules attached to the storage itself, rather
+        than to a person. They apply to everyone, including the administrator
+        who wrote them.</dd>
+        <dt>Lifecycle rule</dt><dd>An instruction like &ldquo;after 90 days,
+        move this to cheaper storage&rdquo; or &ldquo;after 30 days, delete
+        it&rdquo;, carried out automatically.</dd>
+        <dt>Versioning</dt><dd>Keeping the previous copy whenever a file is
+        overwritten, so a mistake can be undone.</dd>
+        <dt>Multipart upload</dt><dd>How large files are sent: in pieces, which
+        are assembled into the finished file at the end.</dd>
+        <dt>Terraform</dt><dd>A tool that builds cloud infrastructure from a
+        written description, so the same setup can be rebuilt or destroyed on
+        demand.</dd>
+      </dl>
+    </div>
+
+    <h2>Moving the labs out of the management account</h2>
+
+    <p>The first two labs ran in the account that owns the AWS organization,
+    because it was the only account there was. That is the wrong place for
+    them. The organization&rsquo;s own guardrails &mdash; Service Control
+    Policies &mdash; do not apply to the management account, so nothing
+    running there can be contained by them, and lab spending sits in the same
+    place as the billing for everything else.</p>
+
+    <p>So this week started by creating a separate <code>aws-labs</code>
+    account inside the organization. Every lab from here runs there. The
+    management account keeps the organization, the billing and an account-wide
+    budget, and holds no lab resources at all.</p>
+
+    <div class="plain"><strong>Worth knowing</strong>
+      <p>A new account inside an organization does not come with a fresh Free
+      Tier &mdash; the allowance is shared across the whole organization. What
+      separation buys is containment and a clean answer to &ldquo;what did the
+      labs cost?&rdquo;, not more free usage.</p>
+    </div>
+
+    <h2>The design</h2>
+
+    <figure>
+      <img src="images/lab-03/architecture.svg" alt="One writer passing two bucket-policy gates into three S3 zones with their lifecycle rules, plus an incomplete upload that is billed but never listed">
+      <figcaption>Figure 1. Every write passes the policy gates. The three
+      zones differ in what happens to data once it is there. The fourth box is
+      not a zone &mdash; it is the remains of an upload that never
+      finished.</figcaption>
+    </figure>
+
+    <table>
+      <tr><th>Zone</th><th>Rule</th><th>Why</th></tr>
+      <tr><td><code>raw/</code></td><td>cheaper storage at 30 days, cold storage at 90</td><td>Data as it arrived; read rarely, kept for reprocessing</td></tr>
+      <tr><td><code>curated/</code></td><td>old versions deleted after 90 days</td><td>The current version stays fast; history is for recovery</td></tr>
+      <tr><td><code>analytics/</code></td><td>objects deleted after 30 days</td><td>Query results can always be produced again</td></tr>
+      <tr><td>everything</td><td>unfinished uploads cancelled after 7 days</td><td>See below &mdash; this is the one that matters</td></tr>
+    </table>
+
+    <p>One decision there is worth stating plainly. <code>raw/</code> moves to
+    Glacier Instant Retrieval at 90 days, not to Deep Archive. Deep Archive is
+    roughly four times cheaper and cannot be read at all without a restore
+    that takes hours. For data whose whole purpose is to be reprocessed later,
+    that is not a saving, it is a trap:</p>
+
+<pre><code>$ aws s3api get-object --key raw/dt=2026-11-26/cold.csv cold.csv
+
+An error occurred (InvalidObjectState) when calling the GetObject operation:
+The operation is not valid for the object's storage class
+StorageClass: DEEP_ARCHIVE</code></pre>
+
+    <p>That is what a reprocessing job would hit, three months after somebody
+    optimised the storage bill.</p>
+
+    <h2>Making the layout real</h2>
+
+    <p>The bucket refuses any write outside the three zones:</p>
+
+<pre><code>statement {
+  sid    = "DenyWritesOutsideZones"
+  effect = "Deny"
+  actions       = ["s3:PutObject"]
+  not_resources = local.zone_arns
+}</code></pre>
+
+<pre><code>$ aws s3api put-object --bucket lab-lake-e8459b4d --key scratch/oops.csv ...
+
+An error occurred (AccessDenied) when calling the PutObject operation:
+... is not authorized to perform: s3:PutObject on resource:
+"arn:aws:s3:::lab-lake-e8459b4d/scratch/oops.csv"
+with an explicit deny in a resource-based policy</code></pre>
+
+    <div class="note"><strong>Note</strong><p>Read the last line. Every denial
+    in last week&rsquo;s lab ended <em>in an identity-based policy</em> &mdash;
+    a rule about what a particular role may do. This one is
+    <em>resource-based</em>: a rule attached to the bucket. The difference is
+    practical. The first is removed by editing the role. The second is not, and
+    it applies to the administrator too.</p></div>
+
+    <h2>The encryption policy everybody copies, and what it does now</h2>
+
+    <p>There is a statement that appears in a great many tutorials. It denies
+    any upload that does not explicitly ask for encryption. Applied, it does
+    exactly that &mdash; a plain upload gets refused.</p>
+
+    <p>Here is the problem. This is an object uploaded by a command that asked
+    for nothing at all:</p>
+
+<pre><code>$ aws s3api head-object --key raw/dt=2026-11-26/events.csv \
+    --query ServerSideEncryption
+AES256</code></pre>
+
+    <p>Since January 2023, S3 encrypts every object at rest whether the caller
+    asks or not. The statement no longer decides whether data is encrypted. It
+    only decides whether clients that did not think to send a header get an
+    error. It is still worth writing a rule here &mdash; but about which
+    <em>algorithm</em> is acceptable, which takes two conditions rather than
+    one:</p>
+
+<pre><code>condition {
+  test     = "Null"
+  variable = "s3:x-amz-server-side-encryption"
+  values   = ["false"]          # the header must be present
+}
+condition {
+  test     = "StringNotEquals"
+  variable = "s3:x-amz-server-side-encryption"
+  values   = ["AES256"]         # and must say AES256
+}</code></pre>
+
+    <div class="note"><strong>The trap</strong><p>The first condition is not
+    decoration. In IAM, a &ldquo;not equals&rdquo; test against a value that is
+    <em>missing entirely</em> evaluates to <strong>true</strong>. Without the
+    presence check, this rule would deny everyone who simply did not send the
+    header &mdash; reintroducing the bug it was written to remove.</p></div>
+
+    <h2>The storage you are paying for that nothing will show you</h2>
+
+    <p>Large files are uploaded in pieces. If the upload is interrupted, the
+    pieces that did arrive stay where they are, waiting to be assembled.</p>
+
+    <p>So: start an upload, send one 5 MiB piece, walk away. Then look for
+    it.</p>
+
+<pre><code>$ aws s3 ls s3://lab-lake-e8459b4d/raw/dt=2026-11-26/
+2026-11-26 17:04:05         32 events.csv
+
+$ aws s3api list-multipart-uploads --bucket lab-lake-e8459b4d
+|  2026-11-26T23:05:12+00:00 |  raw/dt=2026-11-26/big.bin  |</code></pre>
+
+    <p>The 5 MiB is billed as storage. It is in no file listing, in no reported
+    bucket size, in no inventory of objects &mdash; because it is not an object
+    yet, only the parts of one. A single command sees it, and it is a command
+    nobody runs.</p>
+
+    <div class="plain"><strong>Why this matters</strong>
+      <p>A pipeline whose uploads fail partway through accumulates these
+      quietly, month after month, while the bucket&rsquo;s reported size never
+      moves. The bill goes up and the storage appears empty.</p>
+      <p>The fix is four lines of configuration that cancels unfinished
+      uploads after seven days. It costs nothing and it is the single most
+      worthwhile rule on this bucket.</p>
+    </div>
+
+    <h2>Deleting does not delete</h2>
+
+<pre><code>$ aws s3api get-object --key curated/report.txt out.txt
+An error occurred (NoSuchKey) ... The specified key does not exist.</code></pre>
+
+    <p>The file is not gone. With versioning on, a delete leaves a marker on
+    top and the data underneath. <code>NoSuchKey</code> means &ldquo;nothing
+    current here&rdquo;, which is a different statement from &ldquo;no such
+    object&rdquo; &mdash; and the gap between them is a recovery procedure.
+    Overwrites behave the same way: the previous version was read back
+    intact.</p>
+
+    <figure>
+      <img src="images/lab-03/04-object-versions.png" alt="The S3 console with Show versions on, listing a delete marker above two versions of report.txt">
+      <figcaption>Figure 2. The same file with versions shown: an empty
+      delete marker on top, and underneath it both versions &mdash; the one
+      written second, and the one it replaced. Nothing was lost by either the
+      overwrite or the delete.</figcaption>
+    </figure>
+
+    <h2>Building and testing it</h2>
+
+    <figure>
+      <img src="images/lab-03/01-terraform-plan.png" alt="A real terminal running terraform plan, showing Plan: 10 to add">
+      <figcaption>Figure 3. Every command line in these terminal figures was
+      printed by bash from the command it was about to run, so a figure cannot
+      show one command and execute another. The shell scripts are committed
+      beside the images.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/lab-03/02-terraform-apply.png" alt="A real terminal running terraform apply, ending with Apply complete! Resources: 10 added">
+      <figcaption>Figure 4. The apply. It opens with a <code>destroy</code>
+      because the capture tool runs its script twice &mdash; once invisibly, so
+      the output can be checked for account numbers and credentials before any
+      image exists, and once in the window. Starting from nothing is what makes
+      the visible run a real build.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/lab-03/03-lifecycle-rules.png" alt="The S3 console showing four enabled lifecycle rules">
+      <figcaption>Figure 5. The four rules as S3 stored them. Note the line
+      above them: <em>Default minimum object size for transitions &mdash; All
+      storage classes 128K</em>. AWS applies that floor itself, because moving
+      objects smaller than 128&nbsp;KB to cheaper storage generally costs more
+      than it saves.</figcaption>
+    </figure>
+
+    <p>Thirteen checks, all passing: writes inside and outside the zones, the
+    encryption rules in both their broken and working forms, a request over
+    plain HTTP, an overwrite, a delete, the abandoned upload, the Deep Archive
+    read, and the stored lifecycle configuration compared against the one that
+    was designed.</p>
+
+    <h2>What went wrong</h2>
+
+    <p>Before any of this ran, the teardown checker written in week 1 was run
+    against the account. It reported <em>Clean: nothing left behind.</em></p>
+
+    <p>The credentials had expired. Every call it made had failed, every
+    failure had been quietly turned into &ldquo;nothing found&rdquo;, and an
+    account it could not see was indistinguishable from an account with
+    nothing in it.</p>
+
+    <div class="warn"><strong>The lesson</strong><p>That script exists to be
+    believed when it says a lab left nothing behind, which makes a false
+    &ldquo;clean&rdquo; its worst possible failure. It now checks its
+    credentials before anything else and stops with an error rather than a
+    verdict. The clue, in hindsight, was that it reported <em>zero</em>
+    permanent resources when three were known to exist &mdash; a check that
+    cannot see what it is certain about is not reporting on anything
+    else either.</p></div>
+
+<pre><code>$ python scripts/verify_torn_down.py
+Cannot verify: Error when retrieving token from sso: Token has expired
+Re-authenticate, then run this again. An unverified teardown is not a clean one.</code></pre>
+
+    <p>Two smaller ones. The first apply screenshot showed
+    <code>0 added</code>, because the capture tool&rsquo;s invisible first run
+    had already built everything &mdash; fixed by destroying at the top of the
+    script. And one test appeared to fail when the whole run simply stopped
+    early: not a failure at all, but the output being piped into
+    <code>head</code>, which closed the pipe and killed the script.</p>
+
+    <h2>Takeaways</h2>
+
+    <p>A rule attached to the storage outlives a rule attached to a person.
+    Identity policy describes what someone may do; bucket policy describes
+    what the bucket accepts. Only the second survives somebody editing the
+    first.</p>
+
+    <p>A &ldquo;not equals&rdquo; condition against a missing value is true,
+    which is enough to turn a sensible-looking encryption rule into one that
+    locks out everybody.</p>
+
+    <p>The S3 cost that actually bites is not a storage class. It is an upload
+    that never finished: billed, unlisted, invisible to everything that counts
+    objects, and cancelled automatically by one small rule.</p>
+
+    <p>And a check that cannot fail loudly is not a check.</p>
+
+    <h2>Cleanup</h2>
+
+<pre><code>$ terraform destroy -auto-approve
+Destroy complete! Resources: 10 destroyed.
+
+$ python scripts/verify_torn_down.py
+Clean: nothing left behind.</code></pre>
+
+    <figure>
+      <img src="images/lab-03/05-terraform-destroy.png" alt="A real terminal running terraform destroy, ending with Destroy complete! Resources: 10 destroyed">
+      <figcaption>Figure 6. The teardown.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/lab-03/06-verify-clean.png" alt="A real terminal running the teardown verifier, showing three permanent resources and Clean: nothing left behind">
+      <figcaption>Figure 7. The check that has to be believed &mdash; and that
+      earlier today was believed when it should not have been. Three permanent
+      resources named, nothing else found.</figcaption>
+    </figure>
+
+    <p>One object in this lab went to Deep Archive, which carries a 180-day
+    minimum billing commitment. On roughly a kilobyte that is a fraction of a
+    cent &mdash; but it is the kind of commitment worth knowing about before
+    making it at scale.</p>
+
+    <h2>Code</h2>
+
+    <p>Terraform, the test harness, the command scripts behind each terminal
+    figure, and the full write-up:
+    <a href="https://github.com/preethi-somaraju/aws-labs/tree/main/03-s3-data-lake">github.com/preethi-somaraju/aws-labs</a></p>
+
+    <h2>References</h2>
+
+    <ul class="list">
+      <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-policies.html">Using bucket policies</a></li>
+      <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html">Managing the lifecycle of objects</a></li>
+      <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html">Multipart upload overview</a></li>
+      <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/default-bucket-encryption.html">Default encryption for S3 buckets</a></li>
+      <li><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_best-practices_mgmt-acct.html">Best practices for the management account</a></li>
+    </ul>
+
+  </article>
+
+  <footer>
+    <p><a href="../index.html">Preethi Somaraju</a> &middot; Houston, Texas</p>
+  </footer>
+</main>
+</body>
+</html>

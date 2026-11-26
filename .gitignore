@@ -23,3 +23,4 @@ aws-nyc-taxi-analytics/__pycache__/
 # Ignore AI Agent rules and architecture
 AGENTS.md
 agent_architecture.md
+.claude/
