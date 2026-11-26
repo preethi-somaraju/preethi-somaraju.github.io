@@ -197,6 +197,33 @@ StorageClass: DEEP_ARCHIVE</code></pre>
     <p>That is what a reprocessing job would hit, three months after somebody
     optimised the storage bill.</p>
 
+    <h2>Building it</h2>
+
+    <figure>
+      <img src="images/lab-03/01-terraform-plan.png" alt="A real terminal running terraform plan, showing Plan: 10 to add">
+      <figcaption>Figure 2. Ten resources: the bucket, its four settings, three
+      zone markers, the policy and the lifecycle configuration.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/lab-03/02-terraform-apply.png" alt="A real terminal running terraform apply, ending with Apply complete! Resources: 10 added">
+      <figcaption>Figure 3. The apply. The lifecycle configuration takes 56
+      seconds while everything else takes under three &mdash; S3 accepts it
+      immediately and the provider waits for it to become readable.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/lab-03/03-lifecycle-rules.png" alt="The S3 console showing four enabled lifecycle rules">
+      <figcaption>Figure 4. The four rules as S3 stored them. Note the line
+      above the table: <em>Default minimum object size for transitions &mdash;
+      All storage classes 128K</em>. AWS applies that floor itself, because
+      moving objects smaller than 128&nbsp;KB to cheaper storage generally
+      costs more than it saves.</figcaption>
+    </figure>
+
+    <p>What follows is what the thirteen tests found when they pushed against
+    it.</p>
+
     <h2>Making the layout real</h2>
 
     <p>The bucket refuses any write outside the three zones:</p>
@@ -301,45 +328,16 @@ An error occurred (NoSuchKey) ... The specified key does not exist.</code></pre>
 
     <figure>
       <img src="images/lab-03/04-object-versions.png" alt="The S3 console with Show versions on, listing a delete marker above two versions of report.txt">
-      <figcaption>Figure 2. The same file with versions shown: an empty
-      delete marker on top, and underneath it both versions &mdash; the one
-      written second, and the one it replaced. Nothing was lost by either the
-      overwrite or the delete.</figcaption>
+      <figcaption>Figure 5. The same file with versions shown: an empty delete
+      marker on top, and under it both versions &mdash; the one written second,
+      and the one it replaced.</figcaption>
     </figure>
 
-    <h2>Building and testing it</h2>
-
-    <figure>
-      <img src="images/lab-03/01-terraform-plan.png" alt="A real terminal running terraform plan, showing Plan: 10 to add">
-      <figcaption>Figure 3. Every command line in these terminal figures was
-      printed by bash from the command it was about to run, so a figure cannot
-      show one command and execute another. The shell scripts are committed
-      beside the images.</figcaption>
-    </figure>
-
-    <figure>
-      <img src="images/lab-03/02-terraform-apply.png" alt="A real terminal running terraform apply, ending with Apply complete! Resources: 10 added">
-      <figcaption>Figure 4. The apply. It opens with a <code>destroy</code>
-      because the capture tool runs its script twice &mdash; once invisibly, so
-      the output can be checked for account numbers and credentials before any
-      image exists, and once in the window. Starting from nothing is what makes
-      the visible run a real build.</figcaption>
-    </figure>
-
-    <figure>
-      <img src="images/lab-03/03-lifecycle-rules.png" alt="The S3 console showing four enabled lifecycle rules">
-      <figcaption>Figure 5. The four rules as S3 stored them. Note the line
-      above them: <em>Default minimum object size for transitions &mdash; All
-      storage classes 128K</em>. AWS applies that floor itself, because moving
-      objects smaller than 128&nbsp;KB to cheaper storage generally costs more
-      than it saves.</figcaption>
-    </figure>
-
-    <p>Thirteen checks, all passing: writes inside and outside the zones, the
-    encryption rules in both their broken and working forms, a request over
-    plain HTTP, an overwrite, a delete, the abandoned upload, the Deep Archive
-    read, and the stored lifecycle configuration compared against the one that
-    was designed.</p>
+    <p>Thirteen checks in all, every one passing: writes inside and outside
+    the zones, the encryption rules in both their broken and working forms, a
+    request over plain HTTP, an overwrite, a delete, the abandoned upload, the
+    Deep Archive read, and the lifecycle configuration AWS stored compared
+    against the one that was written.</p>
 
     <h2>What went wrong</h2>
 
@@ -403,9 +401,7 @@ Clean: nothing left behind.</code></pre>
 
     <figure>
       <img src="images/lab-03/06-verify-clean.png" alt="A real terminal running the teardown verifier, showing three permanent resources and Clean: nothing left behind">
-      <figcaption>Figure 7. The check that has to be believed &mdash; and that
-      earlier today was believed when it should not have been. Three permanent
-      resources named, nothing else found.</figcaption>
+      <figcaption>Figure 7. Three permanent resources named, nothing else found.</figcaption>
     </figure>
 
     <p>One object in this lab went to Deep Archive, which carries a 180-day
@@ -415,8 +411,11 @@ Clean: nothing left behind.</code></pre>
 
     <h2>Code</h2>
 
-    <p>Terraform, the test harness, the command scripts behind each terminal
-    figure, and the full write-up:
+    <p>The terminal figures are photographs of a real terminal: bash printed
+    each command line from the command it was about to run, and the scripts
+    behind them are committed beside the images.</p>
+
+    <p>Terraform, the test harness, those scripts, and the full write-up:
     <a href="https://github.com/preethi-somaraju/aws-labs/tree/main/03-s3-data-lake">github.com/preethi-somaraju/aws-labs</a></p>
 
     <h2>References</h2>
