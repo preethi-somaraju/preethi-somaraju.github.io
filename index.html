@@ -89,33 +89,31 @@
       </div>
     </div>
 
-    <div class="grid3">
-      <a class="tile" href="blog/aws-lab-03-s3-data-lake.html">
-        <div class="shot"><img src="blog/images/lab-03/01-terraform-plan.png" alt="A real terminal running terraform plan"></div>
-        <div class="b">
-          <div class="wk">Evidence</div>
-          <h4>Real terminal output</h4>
-          <p>Plan, apply and destroy captured from a live run &mdash; never retyped.</p>
-        </div>
-      </a>
-      <a class="tile" href="blog/aws-lab-03-s3-data-lake.html">
-        <div class="shot light"><img src="blog/images/lab-03/03-lifecycle-rules.png" alt="The S3 console showing four lifecycle rules"></div>
-        <div class="b">
-          <div class="wk">Evidence</div>
-          <h4>Console, after the fact</h4>
-          <p>What AWS actually stored, next to what the code asked for.</p>
-        </div>
-      </a>
+    <div class="grid2">
       <a class="tile" href="blog/aws-lab-02-iam-data-access.html">
-        <div class="shot light" style="align-items:center"><img src="blog/images/lab-02/architecture.svg" alt="Lab 02 architecture: two roles inside a permissions boundary"></div>
+        <div class="shot light diagram"><img src="blog/images/lab-02/architecture.svg" alt="Lab 02 architecture: two roles inside a permissions boundary reaching three S3 zones"></div>
         <div class="b">
-          <div class="wk">Week 02</div>
+          <div class="wk">Week 02 &middot; 16 Nov 2026</div>
           <h4>IAM for data access</h4>
-          <p>Two roles, three zones, a permissions boundary &mdash; and one test
-          that failed for the wrong reason.</p>
+          <p>Two roles, three lake zones and a permissions boundary. Eighteen
+          tests &mdash; including one that failed for the wrong reason and
+          nearly sent me debugging a policy that was already correct.</p>
+        </div>
+      </a>
+      <a class="tile" href="blog/aws-lab-01-account-foundations.html">
+        <div class="shot light diagram"><img src="blog/images/lab-01/architecture.svg" alt="Lab 01 architecture: Terraform state in S3 with a DynamoDB lock, and AWS Budgets watching spend"></div>
+        <div class="b">
+          <div class="wk">Week 01 &middot; 15 Nov 2026</div>
+          <h4>Account foundations</h4>
+          <p>Before any pipeline exists, an account needs a spending limit and
+          durable state. Eight tests, one of which refused an administrator
+          permission to make a bucket public.</p>
         </div>
       </a>
     </div>
+
+    <p class="more"><a href="https://github.com/preethi-somaraju/aws-labs">Weeks 4 to 52 are planned in the open &rarr;</a></p>
+
   </section>
 
   <section class="band">

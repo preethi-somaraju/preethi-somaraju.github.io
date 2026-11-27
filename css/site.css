@@ -79,6 +79,12 @@ html:not([data-theme="dark"]) .sun{display:none}
 .feature .meta b{color:var(--ink);font-weight:600}
 
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem}
+.tile .shot.diagram{height:11.5rem;align-items:center;justify-content:center;padding:1rem}
+.tile .shot.diagram img{width:100%;height:100%;object-fit:contain}
+.more{margin-top:1.3rem;font-size:.92rem}
+.more a{color:var(--accent);border-bottom:1px solid var(--hair)}
+.more a:hover{border-color:var(--accent)}
 .tile{background:var(--card);border:1px solid var(--hair);border-radius:10px;
       overflow:hidden;transition:transform .14s,box-shadow .14s;display:block}
 .tile:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
@@ -181,7 +187,7 @@ ul.list p{margin:.25rem 0 0;color:var(--soft);font-size:.95rem}
   .side{border-left:0;border-top:2px solid var(--hair);padding:1rem 0 0}
   .feature{grid-template-columns:1fr}
   .feature .img{border-right:0;border-bottom:1px solid var(--hair)}
-  .grid3{grid-template-columns:1fr}
+  .grid3,.grid2{grid-template-columns:1fr}
   .two{grid-template-columns:1fr;gap:1.6rem}
   .article{padding:1.8rem 1.2rem 3.5rem}
   .article h1{font-size:1.95rem}
