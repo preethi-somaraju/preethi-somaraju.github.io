@@ -168,10 +168,7 @@
 
     <figure>
       <img src="images/lab-03/architecture.svg" alt="One writer passing two bucket-policy gates into three S3 zones with their lifecycle rules, plus an incomplete upload that is billed but never listed">
-      <figcaption>Figure 1. Every write passes the policy gates. The three
-      zones differ in what happens to data once it is there. The fourth box is
-      not a zone &mdash; it is the remains of an upload that never
-      finished.</figcaption>
+      <figcaption>Figure 1. The fourth box is not a zone &mdash; it is the remains of an upload that never finished.</figcaption>
     </figure>
 
     <table>
@@ -207,22 +204,13 @@ StorageClass: DEEP_ARCHIVE</code></pre>
 
     <figure>
       <img src="images/lab-03/02-terraform-apply.png" alt="A real terminal running terraform apply, ending with Apply complete! Resources: 10 added">
-      <figcaption>Figure 3. The apply. The lifecycle configuration takes 56
-      seconds while everything else takes under three &mdash; S3 accepts it
-      immediately and the provider waits for it to become readable.</figcaption>
+      <figcaption>Figure 3. The apply.</figcaption>
     </figure>
 
     <figure>
       <img src="images/lab-03/03-lifecycle-rules.png" alt="The S3 console showing four enabled lifecycle rules">
-      <figcaption>Figure 4. The four rules as S3 stored them. Note the line
-      above the table: <em>Default minimum object size for transitions &mdash;
-      All storage classes 128K</em>. AWS applies that floor itself, because
-      moving objects smaller than 128&nbsp;KB to cheaper storage generally
-      costs more than it saves.</figcaption>
+      <figcaption>Figure 4. The four rules as S3 stored them. AWS will not transition objects under 128&nbsp;KB at all &mdash; moving them costs more than it saves.</figcaption>
     </figure>
-
-    <p>What follows is what the thirteen tests found when they pushed against
-    it.</p>
 
     <h2>Making the layout real</h2>
 
@@ -328,9 +316,7 @@ An error occurred (NoSuchKey) ... The specified key does not exist.</code></pre>
 
     <figure>
       <img src="images/lab-03/04-object-versions.png" alt="The S3 console with Show versions on, listing a delete marker above two versions of report.txt">
-      <figcaption>Figure 5. The same file with versions shown: an empty delete
-      marker on top, and under it both versions &mdash; the one written second,
-      and the one it replaced.</figcaption>
+      <figcaption>Figure 5. A delete marker on top of both versions.</figcaption>
     </figure>
 
     <p>Thirteen checks in all, every one passing: writes inside and outside
@@ -410,10 +396,6 @@ Clean: nothing left behind.</code></pre>
     making it at scale.</p>
 
     <h2>Code</h2>
-
-    <p>The terminal figures are photographs of a real terminal: bash printed
-    each command line from the command it was about to run, and the scripts
-    behind them are committed beside the images.</p>
 
     <p>Terraform, the test harness, those scripts, and the full write-up:
     <a href="https://github.com/preethi-somaraju/aws-labs/tree/main/03-s3-data-lake">github.com/preethi-somaraju/aws-labs</a></p>
