@@ -220,7 +220,7 @@
 
     <figure>
       <img src="images/lab-02/03-terraform-plan.png" alt="A real terminal running terraform plan, showing Plan: 17 to add">
-      <figcaption>Figure 2. Every command line in these terminal figures was printed by bash under <code>set -x</code> from the command it was about to run, so a figure cannot show one command and execute another. The shell scripts are committed beside the images.</figcaption>
+      <figcaption>Figure 2. <code>terraform plan</code> &mdash; 17 resources.</figcaption>
     </figure>
 
     <figure>
@@ -311,6 +311,11 @@ An error occurred (AccessDenied) when calling the ListObjectsV2 operation: Acces
 
     <h2>Teardown, verified</h2>
 
+    <p>&ldquo;I ran destroy&rdquo; and &ldquo;nothing is left&rdquo; are
+    different claims, and only the second one keeps the bill at zero. The
+    verifier makes two passes: everything tagged for the series, and separately
+    the services that bill whether tagged or not.</p>
+
     <figure>
       <img src="images/lab-02/05-terraform-destroy.png" alt="A real terminal running terraform destroy, ending with Destroy complete! Resources: 17 destroyed">
       <figcaption>Figure 6. Both roles, the permissions boundary and both buckets come down.</figcaption>
@@ -318,7 +323,7 @@ An error occurred (AccessDenied) when calling the ListObjectsV2 operation: Acces
 
     <figure>
       <img src="images/lab-02/06-verify-clean.png" alt="A real terminal running the teardown verifier, showing Clean: nothing left behind">
-      <figcaption>Figure 7. &ldquo;I ran destroy&rdquo; and &ldquo;nothing is left&rdquo; are different claims. The verifier checks resources tagged for the series and, separately, the services that bill whether tagged or not. Only Lab 01&rsquo;s permanent three remain.</figcaption>
+      <figcaption>Figure 7. Only Lab 01&rsquo;s permanent three remain.</figcaption>
     </figure>
 
     <h2>Takeaways</h2>
@@ -348,8 +353,11 @@ An error occurred (AccessDenied) when calling the ListObjectsV2 operation: Acces
 
     <h2>Code</h2>
 
-    <p>Terraform, tests, the command scripts behind each terminal figure, and
-    the full write-up:
+    <p>The terminal figures are photographs of a real terminal: bash printed
+    each command line from the command it was about to run, and the scripts
+    behind them are committed beside the images.</p>
+
+    <p>Terraform, tests, those scripts, and the full write-up:
     <a href="https://github.com/preethi-somaraju/aws-labs/tree/main/02-iam-roles-least-privilege">github.com/preethi-somaraju/aws-labs</a></p>
 
     <h2>References</h2>
